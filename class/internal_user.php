@@ -1,13 +1,13 @@
 <?php 
 class internal_user{
-	private $userid;
-	private $fname;
-	private $lname;
-	private $gids = [];
-	private $session_id;
-	private $password;
+	private $User_ID;
+	private $First_Name;
+	private $Last_Name;
+	private $Username;
+	private $Password;
+	private $Session_IP;
 	
-	function CheckForUserSession(){
+	function FetchUser(){
 		if(isset($_SESSION['user_uid'])){
 			return $this->GetUserFromSession();
 		}
@@ -22,6 +22,7 @@ class internal_user{
 		foreach($users_found as $uf){
 			if(password_verify($password, $uf['Password'])){
 				// User successfully logged in.
+				//Update Session IP
 				return true;
 			}
 		}
@@ -39,5 +40,22 @@ class internal_user{
 	
 	function GetUserFromSession(){
 		$user_rows = $database->query("SELECT * FROM `Users` WHERE `user_id` = '?'", [$_SESSION['user_uid']]);
+		if(count($user_rows) > 1){
+			throw new Exception("Multiple users were found by a PK. This should not be possible!");
+		}
+		if(count($user_rows) == 0){
+			return false;
+		}
+		foreach($user_rows as $k=>$v){
+			$this[$k] = $v;
+		}
+		
+		// check user session IP.  If not same invalidate session.
+		
+		return(true);
+	}
+	
+	function DeleteSession($session_id){
+		throw new Exception("DeleteSession Functionality has not been implemented!");
 	}
 }
