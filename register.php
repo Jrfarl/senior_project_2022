@@ -1,3 +1,6 @@
+<?php
+require("masterutil.php");?>
+
 <!doctype html>
 <html>
 <head>

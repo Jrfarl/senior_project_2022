@@ -8,7 +8,8 @@ $database = new database("localhost", "sys_core", "K~;oBGpIXa5YDAu", "SeniorProj
 ############################################
 #			Global Variable Init		   #
 ############################################
-$vendordir = "./vendor";
-$apidir = "./api";
-$assetdir = "./assets";
+$vendordir = "/vendor";
+$apidir =  "/api";
+$assetdir =  "/assets";
+
 
