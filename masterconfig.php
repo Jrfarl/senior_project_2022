@@ -12,10 +12,10 @@ $success = [];
 $warn = [];
 
 $CONST_VENDORDIR = "/vendor";
-$CONST_APIDIR =  "/api";
-$CONST_ASSETDIR =  "/assets";
-$CONST_TEMPLATEDIR = "/templates";
+$CONST_APIDIR =  __dir__."/api";
+$CONST_ASSETDIR =  __dir__."/assets";
+$CONST_TEMPLATEDIR = __dir__."/templates";
 
-$me;
+$me; // set up global user variable. can be called from any file being this variable is initalized in this file which has a high priority.
 
 
