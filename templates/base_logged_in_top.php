@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title><?= $sitename ?> | <?= isset($pagename) ? $pagename : "" ?></title>
-<link href="<?= $vendordir?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 	
 <body>

@@ -11,9 +11,10 @@ $error = [];
 $success = [];
 $warn = [];
 
-$vendordir = "/vendor";
-$apidir =  "/api";
-$assetdir =  "/assets";
+$CONST_VENDORDIR = "/vendor";
+$CONST_APIDIR =  "/api";
+$CONST_ASSETDIR =  "/assets";
+$CONST_TEMPLATEDIR = "/templates";
 
 $me;
 

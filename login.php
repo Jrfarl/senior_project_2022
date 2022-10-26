@@ -27,7 +27,7 @@ if(isset($_SESSION['user_uid'])){
 <head>
 <meta charset="utf-8">
 <title><?= $sitename ?> | Login</title>
-<link href="<?= $vendordir?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?= $assets?>/css/loginsys.css">
 </head>
 
@@ -73,4 +73,4 @@ if(isset($_SESSION['user_uid'])){
 	<a href="register.php" class="btn btn-outline-success">Register</a>
 </body>
 </html>
-<script src="<?= $vendordir?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>

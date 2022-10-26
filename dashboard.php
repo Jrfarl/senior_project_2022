@@ -2,7 +2,7 @@
 require("masterutil.php");
 $pagename = "Dashboard";
 ?>
-<?php require("templates/base_logged_in_top.php"); ?>
+<?php require($CONST_TEMPLATEDIR."/base_logged_in_top.php"); ?>
 <div class="col-12">
 	<div class="col-6">
 		<div class="card">
@@ -16,4 +16,4 @@ $pagename = "Dashboard";
 		</div>
 	</div>
 </div>
-<?php require("templates/base_logged_in_bottom.php"); ?>
+<?php require($CONST_TEMPLATEDIR."/base_logged_in_bottom.php"); ?>

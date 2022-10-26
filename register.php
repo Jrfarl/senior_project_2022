@@ -35,7 +35,7 @@ if(!$newUser->FetchUser()){
 <head>
 <meta charset="utf-8">
 <title><?= $sitename ?> | Register</title>
-<link href="<?= $vendordir?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -82,4 +82,4 @@ if(!$newUser->FetchUser()){
 	</form>
 </body>
 </html>
-<script src="<?= $vendordir?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -1,3 +1,3 @@
 </body>
 </html>
-<script src="<?= $vendordir?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?= $CONST_VENDORDIR ?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
