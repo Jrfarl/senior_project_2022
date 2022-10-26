@@ -14,13 +14,25 @@ class internal_user{
 		return false;
 	}
 	
+	function DoesUsernameExist($input){
+		global $database;
+		$users_found = $database->query("SELECT count(*) as count FROM `Users` WHERE `Username` = (?)", array($input));
+		if($users_found[0]['count'] > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	function TryLogin($username, $password){
+		global $database;
 		if($username == "" || $password == ""){
 			return false;
 		}
-		$users_found = $database->query("SELECT * FROM `Users` WHERE `Login_ID` = '?'", [$username]);
+		$users_found = $database->query("SELECT User_ID, Username, Password FROM `Users` WHERE `Username` = ?", [$username]);
 		foreach($users_found as $uf){
 			if(password_verify($password, $uf['Password'])){
+				$_SESSION['user_uid'] = $uf['User_ID'];
 				// User successfully logged in.
 				//Update Session IP
 				return true;
@@ -29,25 +41,32 @@ class internal_user{
 		return false;
 	}
 	
-	function CreateUser($username, $password, $first_name, $last_name, $groups){
-		$returns = $database->query('INSERT INTO `Users` (`First_Name`, `Last_Name`, `Groups`, `Login_id`, `Password`) VALUES (?,?,?,?,?)', $first_name, $last_name, $groups, $username, password_hash($password));
-		if($returns->affected_rows > 0){
-			return true;
+	function CreateUser($username, $password, $first_name, $last_name){
+		global $database;
+		if(!($this->DoesUsernameExist($username))){
+			$returns = $database->query('INSERT INTO `Users` (`First_Name`, `Last_Name`,  `Username`, `Password`) VALUES (?,?,?,?)', array($first_name, $last_name, $username, password_hash($password, PASSWORD_DEFAULT)), false);
+			if($returns== 1){
+				$_SESSION['user_uid'] = $database->query('SELECT User_ID FROM `Users` WHERE `Username` = ?', array($username), true)[0]['User_ID'];
+				return true;
+			}else{
+				return false;
+			}
 		}else{
-			return false;
+			throw new Exception("A user already exists with that username!");
 		}
 	}
 	
 	function GetUserFromSession(){
-		$user_rows = $database->query("SELECT * FROM `Users` WHERE `user_id` = '?'", [$_SESSION['user_uid']]);
+		global $database;
+		$user_rows = $database->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$_SESSION['user_uid']]);
 		if(count($user_rows) > 1){
 			throw new Exception("Multiple users were found by a PK. This should not be possible!");
 		}
 		if(count($user_rows) == 0){
 			return false;
 		}
-		foreach($user_rows as $k=>$v){
-			$this[$k] = $v;
+		foreach($user_rows[0] as $k=>$v){
+			$this->$k = $v;
 		}
 		
 		// check user session IP.  If not same invalidate session.
@@ -57,5 +76,12 @@ class internal_user{
 	
 	function DeleteSession($session_id){
 		throw new Exception("DeleteSession Functionality has not been implemented!");
+	}
+	
+	function GetAttr($key){
+		if(isset($this->$key)){
+			return $this->$key;
+		}
+		return null;
 	}
 }
