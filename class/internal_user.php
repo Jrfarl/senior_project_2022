@@ -74,8 +74,8 @@ class internal_user{
 		return(true);
 	}
 	
-	function DeleteSession($session_id){
-		throw new Exception("DeleteSession Functionality has not been implemented!");
+	function DestroySession(){
+		session_destroy();
 	}
 	
 	function GetAttr($key){
