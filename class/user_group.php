@@ -2,6 +2,7 @@
 class user_group{
 	private $User_ID = 0; // 0 should never exist in the database.
 	private $Group_ID;
+	private $PROTECTED_GROUP_IDS = [];
 	
 	#Pass in an internal_user object. Need to ensure that the 
 	function __construct($user=null){

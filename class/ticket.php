@@ -3,7 +3,7 @@ class ticket{
 	private $Ticket_ID;
 	private $Title;
 	private $Status_Code;
-	private $Assigned_To_ID;
+	private $Assigned_To_ID = [];
 	private $Created_By_ID;
 	private $Date_Created;
 	private $metadata = [];

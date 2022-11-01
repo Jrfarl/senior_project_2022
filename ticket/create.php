@@ -10,18 +10,14 @@ $pagename = "Create Ticket";
 			Create Ticket
 		  </div>
 		  <div class="card-body">
-			<h5 class="card-title">Create a Ticket</h5>
 			<p class="card-text">
 				<div class="form">
 			  		<div class="row">
 						<div class="col-6">
-							<input class="form-control" placeholder="Title" name="Title">
-						</div>
-						<div class="col-6">
-							<input class="form-control" placeholder="Department" name="Department">
+							<input class="form-control" placeholder="Title" name="title">
 						</div>
 						<div class="col-12 mt-2">
-							<textarea class="form-control" name="Narrative" rows="7" placeholder="Explain in as much detail as possible the reason for the ticket"></textarea>
+							<textarea class="form-control" name="narrative" rows="15" placeholder="Explain in as much detail as possible the reason for the ticket"></textarea>
 						</div>
 					</div>
 			  	</div>  

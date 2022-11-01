@@ -6,6 +6,7 @@ class internal_user{
 	private $Username;
 	private $Password;
 	private $Session_IP;
+	private $PROTECTED_USER_IDS = [];
 	
 	function FetchUser(){
 		if(isset($_SESSION['user_uid'])){

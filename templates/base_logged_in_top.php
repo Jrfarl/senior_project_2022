@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title><?= $sitename ?> | <?= isset($pagename) ? $pagename : "" ?></title>
+<title><?= $CONST_SITENAME ?> | <?= isset($pagename) ? $pagename : "" ?></title>
 <link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 	
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/dashboard.php"><?= $sitename ?></a>
+    <a class="navbar-brand" href="/dashboard.php"><?= $CONST_SITENAME ?></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,7 +22,10 @@
           <a class="nav-link" href="/ticket/create.php">Create Ticket</a>
         </li>
 		<li class="nav-item">
-          <a class="nav-link" href="/ticket/create.php">View Tickets</a>
+          <a class="nav-link" href="/ticket/list.php">View Tickets</a>
+        </li>
+		<li class="nav-item">
+          <a class="nav-link" href="/admin/index.php">Administrator</a>
         </li>
 <!--
         <li class="nav-item">
@@ -67,3 +70,4 @@
 	</div>
 	<?php } ?>
 	<div class="col-12">
+		<div class="row mx-2 mt-2">
