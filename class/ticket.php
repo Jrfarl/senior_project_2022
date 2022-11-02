@@ -6,6 +6,7 @@ class ticket{
 	private $Assigned_To_ID = [];
 	private $Created_By_ID;
 	private $Date_Created;
+	private $Permissions = [];
 	private $metadata = [];
 	
 	function __construct($target_id=null){
