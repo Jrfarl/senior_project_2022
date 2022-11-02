@@ -15,6 +15,22 @@ class internal_user{
 		return false;
 	}
 	
+	function GetUserFromID($id){
+		global $database;
+		$user_rows = $database->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$id]);
+		if(count($user_rows) > 1){
+			throw new Exception("Multiple users were found by a PK. This should not be possible!");
+		}
+		if(count($user_rows) == 0){
+			return false;
+		}
+		foreach($user_rows[0] as $k=>$v){
+			$this->$k = $v;
+		}
+		
+		return(true);
+	}
+	
 	function DoesUsernameExist($input){
 		global $database;
 		$users_found = $database->query("SELECT count(*) as count FROM `Users` WHERE `Username` = (?)", array($input));

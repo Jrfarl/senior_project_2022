@@ -21,4 +21,10 @@ class comment{
 		$return = $database->query("DELETE FROM `Comments` WHERE `Comment_ID` = ?", [$text, $comment_id], false);
 		return $return;
 	}
+	
+	function SelectAllByTicket($ticket_id){
+		global $database;
+		$return = $database->query("SELECT * FROM `Comments` WHERE Parent_Ticket_ID = ?", [$ticket_id]);
+		return $return;
+	}
 }
