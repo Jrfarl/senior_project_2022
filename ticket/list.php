@@ -54,7 +54,5 @@ $pagename = "View Tickets";
 
         </div>
 
-    </body>
-    </html>
 
 <?php require("templates/base_logged_in_bottom.php"); ?>
