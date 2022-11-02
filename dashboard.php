@@ -1,6 +1,9 @@
 <?php
 require("masterutil.php");
 $pagename = "Dashboard";
+$tickets = new ticket();
+$unassigned = $tickets->GetUnassignedTickets();
+$unassigned_count = count($unassigned);
 ?>
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_top.php"); ?>
 	
@@ -10,7 +13,7 @@ $pagename = "Dashboard";
 			My Tickets
 		  </div>
 		  <div class="card-body">
-			<h5 class="card-title">Open Tickets Assigned To Me <?php $me->FetchUser();?></h5>
+			<h5 class="card-title">Open Tickets Assigned To Me | 0 </h5>
 			<p class="card-text"></p>
 		  </div>
 		</div>
@@ -21,7 +24,7 @@ $pagename = "Dashboard";
 			Unassigned Tickets
 		  </div>
 		  <div class="card-body">
-			<h5 class="card-title">Current Tickets Not Assigned </h5>
+			<h5 class="card-title">Current Tickets Not Assigned | <span style="color: red"><?= $unassigned_count ?></span></h5>
 			<p class="card-text"></p>
 		  </div>
 		</div>

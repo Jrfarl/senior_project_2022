@@ -1,4 +1,5 @@
 <?php
+
 require("masterutil.php");
 $pagename = "View Tickets";
 ?>
