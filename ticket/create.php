@@ -14,7 +14,13 @@ if(!empty($_POST)){
 	if(!$stop){
 		$ticket = new ticket();
 		$return = $ticket->CreateTicket($_POST['title'], $_POST['narrative'], $me);
+		if($return == true){
+			header("Location: ".$_SERVER['PHP_SELF']."?success");
+		}
 	}
+}
+if(isset($_GET['success'])){
+	$success[] = "Your ticket has been created successfully!";
 }
 ?>
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_top.php"); ?>

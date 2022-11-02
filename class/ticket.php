@@ -51,4 +51,10 @@ class ticket{
 	function ArchiveTicket(){
 		// Archive Ticket Here
 	}
+	
+	function GetUnassignedTickets(){
+		global $database;
+		$return = $database->query("SELECT * FROM SeniorProject.Tickets WHERE Assigned_To_ID = '[]'");
+		return $return;
+	}
 }

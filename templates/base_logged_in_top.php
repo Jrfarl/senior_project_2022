@@ -48,7 +48,7 @@
 	</div>
 	<?php } ?>
 	<?php if(!empty($warn)){?>
-	<div class="alert alert-warm" role="alert">
+	<div class="alert alert-warn" role="alert">
 	 <?php foreach($warn as $k=>$e){
 			if(count($warn) > $k){
 				echo($e."<br>");
@@ -59,7 +59,7 @@
 	</div>
 	<?php } ?>
 		<?php if(!empty($success)){?>
-	<div class="alert alert-warm" role="alert">
+	<div class="alert alert-success" role="alert">
 	 <?php foreach($success as $k=>$e){
 			if(count($success) > $k){
 				echo($e."<br>");
