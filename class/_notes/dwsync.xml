@@ -2,7 +2,11 @@
 <dwsync>
 <file name="autoload.php" server="seniorproj.gabeharman.com//var/www/html/" local="133106549251924212" remote="133106549260000000" Dst="2" />
 <file name="database.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112100057616009" remote="133112100070000000" Dst="2" />
+<<<<<<< Updated upstream
 <file name="internal_user.php" server="seniorproj.gabeharman.com//var/www/html/" local="133118256794859135" remote="133118256800000000" Dst="2" />
+=======
+<file name="internal_user.php" server="seniorproj.gabeharman.com//var/www/html/" local="133118274071208765" remote="133118274070000000" Dst="2" />
+>>>>>>> Stashed changes
 <file name="user_struct.php" server="seniorproj.gabeharman.com//var/www/html/" local="133100130420000000" remote="133100130420000000" Dst="2" />
 <file name="config.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112090632795705" remote="133112090640000000" Dst="2" />
 <file name="user_group.php" server="seniorproj.gabeharman.com//var/www/html/" local="133118145259429016" remote="133118145260000000" Dst="2" />
