@@ -8,15 +8,21 @@ class ticket{
 	private $Created_By_ID;
 	private $Date_Created;
 	private $Permissions = [];
-	private $metadata = [];
+	private $Metadata = [];
+	private $json_fields = ['Metadata', 'Permissions', 'Assigned_To_ID'];
 	
 	function __construct($target_id=null){
 		if(!is_null($target_id)){
 			// Get Ticket From ID
 			global $database;
 			$returns = $database->query("SELECT * FROM `Tickets` WHERE `Ticket_ID` = ?", [$target_id]);
-			foreach($returns[0] as $r){
-				$this->kvp[$r['Key']] = $r['Value'];
+			foreach($returns[0] as $k=>$r){
+				if(!in_array($k, $this->json_fields)){
+					$this->$k = $r;
+				}else{
+					echo($k);
+					$this->$k = json_decode($r, true);
+				}
 			}
 		}
 	}
@@ -29,7 +35,7 @@ class ticket{
 		$this->Date_Created = date("Y-m-d H-i");
 		$this->Created_By_ID = $userobj->GetUID();
 		
-		$return = $database->query("INSERT INTO `Tickets` (Title, Status_Code, Description, Assigned_To_ID, Created_By_ID, Metadata) VALUES (?,?,?,?,?,?)", [$this->Title, $this->Status_Code, $this->Description, json_encode($this->Assigned_To_ID),$this->Created_By_ID ,json_encode($this->metadata)], false);
+		$return = $database->query("INSERT INTO `Tickets` (Title, Status_Code, Description, Assigned_To_ID, Created_By_ID, Metadata) VALUES (?,?,?,?,?,?)", [$this->Title, $this->Status_Code, $this->Description, json_encode($this->Assigned_To_ID),$this->Created_By_ID ,json_encode($this->Metadata)], false);
 		if($return == 1){
 			return true;
 		}else{
@@ -39,12 +45,19 @@ class ticket{
 	
 	function UpdateTicketAttr($key, $value){
 		global $database;
-		$return = $database->query("UPDATE `Tickets` SET ? = ? WHERE `Ticket_ID` = ?", [$key, $value, $this->Ticket_ID], false);
-		if($return == 1){
-			$this->$key = $value;
-			return true;
-		}else{
-			return false;
+		if(isset($this->$key)){
+			$return = $database->query("UPDATE `Tickets` SET `$key` = ? WHERE `Ticket_ID` = ?", [ $value, $this->Ticket_ID], false);
+			if($return == 1){
+				if(is_array($this->$key)){
+					$this->$key = json_decode($value, true);
+				}else{
+					$this->$key = $value;
+				}
+				
+				return true;
+			}else{
+				return false;
+			}
 		}
 	}
 	
@@ -57,4 +70,24 @@ class ticket{
 		$return = $database->query("SELECT * FROM SeniorProject.Tickets WHERE Assigned_To_ID = '[]'");
 		return $return;
 	}
+	
+	function GetAttr($key){
+		if(isset($this->$key)){
+			return $this->$key;
+		}
+		return null;
+	}
+	
+	function UpdateAuditLog($user){
+		global $database;
+		$this->Metadata['Last_Audit_User'] = $user->GetUID();
+		$this->Metadata['Last_Audit_Date'] = date("Y-m-d H-i");
+		$return = $database->query("UPDATE `Tickets` SET Metadata = ? WHERE `Ticket_ID` = ?", [ json_encode($this->Metadata), $this->Ticket_ID], false);
+		if($return == 1){
+				return true;
+			}else{
+				return false;
+			}
+	}
+	
 }

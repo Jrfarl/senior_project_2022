@@ -16,6 +16,7 @@ class internal_user{
 	}
 	
 	function GetUserFromID($id){
+		global $database;
 		$user_rows = $database->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$id]);
 		if(count($user_rows) > 1){
 			throw new Exception("Multiple users were found by a PK. This should not be possible!");
@@ -26,8 +27,6 @@ class internal_user{
 		foreach($user_rows[0] as $k=>$v){
 			$this->$k = $v;
 		}
-		
-		// check user session IP.  If not same invalidate session.
 		
 		return(true);
 	}

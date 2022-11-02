@@ -17,4 +17,9 @@ class Status{
 		$return = $database->query("DELETE FROM `Status` WHERE `Status_Code` = ?", [$ID], false);
 		return $return;
 	}
+	function GetAll(){
+		global $database;
+		$return = $database->query("SELECT * FROM Status");
+		return $return;
+	}
 }
