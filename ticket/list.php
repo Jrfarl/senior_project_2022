@@ -17,16 +17,15 @@ $pagename = "View Tickets";
         <div class="list-group">
 
         <?php 
-            global $database;
 			
-           $sql = "Use SeniorProject;
+           $sql = "
                     SELECT Title, Description, Status_Name, Last_Name, First_Name 
                     FROM Tickets
                     INNER JOIN Status on Tickets.Status_Code = Status.Status_Code
                     INNER JOIN Users on Tickets.Created_By_ID = Users.User_ID";
             $result = $database->query($sql);
 
-           if (mysqli_num_rows($result) > 0) { ?>
+            if(isset($result) && !empty($result)) { ?>
 
                 <?php  while($row = mysqli_fetch_assoc($result)) 
                 { ?>
@@ -55,7 +54,5 @@ $pagename = "View Tickets";
 
         </div>
 
-    </body>
-    </html>
 
 <?php require("templates/base_logged_in_bottom.php"); ?>
