@@ -11,30 +11,36 @@ if(!isset($_GET['TID'])){
 	}
 	$status = new status;
 	$all_statuses = $status->GetAll();
+	$comment = new comment();
+	$comments = $comment->SelectAllByTicket($_GET['TID']);
 }
 $stop = false;
 if(!empty($_POST) && isset($_GET['TID'])){
 	foreach($_POST as $k=>$v){
-		if(!is_array($v)){
-			if($ticket->GetAttr($k) != $v){
-				$was_success = $ticket->UpdateTicketAttr($k, $v);
-				if($was_success){
-					$success[] = "Updated ".$k;
-					$ticket->UpdateAuditLog($me);
-				}else{
-					$error[] = "There was an issue updating ".$k;
-				}
-			} 
+		if($k == "new_comment"){
+			$comment->InsertComment($_GET['TID'], null, $v, $me->GetAttr("User_ID"));
 		}else{
-			if($ticket->GetAttr($k) != json_encode($v)){
-				$was_success = $ticket->UpdateTicketAttr($k, json_encode($v));
-				if($was_success){
-					$success[] = "Updated ".$k;
-					$ticket->UpdateAuditLog($me);
-				}else{
-					$error[] = "There was an issue updating ".$k;
-				}
-			} 
+			if(!is_array($v)){
+				if($ticket->GetAttr($k) != $v){
+					$was_success = $ticket->UpdateTicketAttr($k, $v);
+					if($was_success){
+						$success[] = "Updated ".$k;
+						$ticket->UpdateAuditLog($me);
+					}else{
+						$error[] = "There was an issue updating ".$k;
+					}
+				} 
+			}else{
+				if($ticket->GetAttr($k) != json_encode($v)){
+					$was_success = $ticket->UpdateTicketAttr($k, json_encode($v));
+					if($was_success){
+						$success[] = "Updated ".$k;
+						$ticket->UpdateAuditLog($me);
+					}else{
+						$error[] = "There was an issue updating array ".$k;
+					}
+				} 
+			}
 		}
 	}
 }
@@ -63,7 +69,13 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Assigned To:</span>
-							<select name="Assigned_To_ID" class="form-control"></select>
+							<select name="Assigned_To_ID[]" class="form-control"></select>
+						</div>
+						<div class="row mb-1">
+							<span class="col-12">Priority</span>
+							<select name="Priority_Level" class="form-control">
+								<option value="not_implemented"></option>
+							</select>
 						</div>
 				  <hr>
 						<div class="row mb-1">
@@ -104,13 +116,12 @@ if(!empty($_POST) && isset($_GET['TID'])){
 			</div>
 		</div>
 		<div class="col-9">
-			<div class="card">
+			<div class="card mb-1">
 			  <div class="card-header">
 				Audit Ticket
 			  </div>
 			  <div class="card-body">
 					<div class="form">
-						<form action="" method="post">
 						<div class="row mb-1">
 							<div class="col-6">
 								<input class="form-control" placeholder="Title" name="Title" value="<?= $ticket->GetAttr("Title")?>">
@@ -119,7 +130,34 @@ if(!empty($_POST) && isset($_GET['TID'])){
 								<textarea class="form-control" rows="12" readonly placeholder="Explain in as much detail as possible the reason for the ticket"><?= $ticket->GetAttr("Description")?></textarea>
 							</div>
 						</div>
-						</form>
+					</div>  
+			  </div>
+			</div>
+			
+			<div class="card">
+			  <div class="card-header">
+				Comments
+			  </div>
+			  <div class="card-body">
+					<div class="form">
+						<div class="row mb-1">
+							<?php if(count($comments) == 0 ){?>
+							<div class="row mb-2">
+								<div class="col-12 text-center">There are no active comments</div>
+							</div>
+							<hr>
+							<?php }else{ ?>
+							
+							<?php } ?>
+							<form name="ins_comment" method="post" action="">
+							<div class="col-12 mt-2">
+								<textarea class="form-control" rows="2" name="new_comment"  placeholder="Comment"></textarea>
+							</div>
+							<div class="col-12 mt-2">
+								<input type="submit" class="btn btn-outline-primary float-end" value="Create Comment">
+							</div>
+							</form>
+						</div>
 					</div>  
 			  </div>
 			</div>

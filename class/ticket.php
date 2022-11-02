@@ -9,6 +9,7 @@ class ticket{
 	private $Date_Created;
 	private $Permissions = [];
 	private $Metadata = [];
+	private $Priority_Level;
 	private $json_fields = ['Metadata', 'Permissions', 'Assigned_To_ID'];
 	
 	function __construct($target_id=null){
@@ -44,7 +45,7 @@ class ticket{
 	
 	function UpdateTicketAttr($key, $value){
 		global $database;
-		if(isset($this->$key)){
+		if(property_exists($this, $key)){
 			$return = $database->query("UPDATE `Tickets` SET `$key` = ? WHERE `Ticket_ID` = ?", [ $value, $this->Ticket_ID], false);
 			if($return == 1){
 				if(is_array($this->$key)){
@@ -55,9 +56,11 @@ class ticket{
 				
 				return true;
 			}else{
+				echo("Returning false");
 				return false;
 			}
 		}
+		echo("Returning null");
 	}
 	
 	function ArchiveTicket(){
