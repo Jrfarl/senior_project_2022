@@ -92,4 +92,12 @@ class ticket{
 			}
 	}
 	
+	function getPaginationNums($restrictions=null){
+		global $database;
+		if($restrictions == null){
+			$returns = $database->query("SELECT count(*) FROM Tickets");
+			return $returns;
+		}
+	}
+	
 }

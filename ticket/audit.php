@@ -147,7 +147,8 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							</div>
 							<hr>
 							<?php }else{ ?>
-							
+							<?php foreach($comments as $c){ ?>
+							<?php } ?>
 							<?php } ?>
 							<form name="ins_comment" method="post" action="">
 							<div class="col-12 mt-2">
