@@ -85,4 +85,12 @@ class internal_user{
 		}
 		return null;
 	}
+	
+	function CheckPermission($permission){
+		
+	}
+	
+	function GetUID(){
+		return $this->User_ID;
+	}
 }

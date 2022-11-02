@@ -1,6 +1,21 @@
 <?php
 require("../masterutil.php");
 $pagename = "Create Ticket";
+$stop = false;
+if(!empty($_POST)){
+	if(!isset($_POST['title']) || $_POST['title'] == ''){
+		$error[] = "You must include a title!";
+		$stop = true;
+	}
+		if(!isset($_POST['narrative']) || $_POST['narrative'] == ''){
+		$error[] = "You must include a description!";
+		$stop = true;
+	}
+	if(!$stop){
+		$ticket = new ticket();
+		$return = $ticket->CreateTicket($_POST['title'], $_POST['narrative'], $me);
+	}
+}
 ?>
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_top.php"); ?>
 <div class="col-12">
@@ -12,7 +27,8 @@ $pagename = "Create Ticket";
 		  <div class="card-body">
 			<p class="card-text">
 				<div class="form">
-			  		<div class="row">
+					<form action="" method="post">
+			  		<div class="row mb-1">
 						<div class="col-6">
 							<input class="form-control" placeholder="Title" name="title">
 						</div>
@@ -20,6 +36,10 @@ $pagename = "Create Ticket";
 							<textarea class="form-control" name="narrative" rows="15" placeholder="Explain in as much detail as possible the reason for the ticket"></textarea>
 						</div>
 					</div>
+					<div class="col-12">
+						<input type="submit" class="btn btn-outline-primary col-12">
+					</div>
+					</form>
 			  	</div>  
 			</p>
 		  </div>
