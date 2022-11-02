@@ -9,7 +9,7 @@ $pagename = "View Tickets";
 
         <?php 
 			
-           $sql = "SELECT Title, Description, Status_Name, Last_Name, First_Name 
+           $sql = "SELECT Ticket_ID,Title, Description, Status_Name, Last_Name, First_Name 
                    FROM Tickets
                    INNER JOIN Status on Tickets.Status_Code = Status.Status_Code
                    INNER JOIN Users on Tickets.Created_By_ID = Users.User_ID";
@@ -18,9 +18,7 @@ $pagename = "View Tickets";
             if(isset($result) && !empty($result)) { ?>
 
                 <?php  foreach($result as $r){ ?>
-                    <!-- row 01 -->
-
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="audit.php?TID=<?=$r['Ticket_ID']?>" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1"><?= $r["Title"]; ?></h5>
                         <small><?= $r["Status_Name"]; ?></small>

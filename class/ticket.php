@@ -20,7 +20,6 @@ class ticket{
 				if(!in_array($k, $this->json_fields)){
 					$this->$k = $r;
 				}else{
-					echo($k);
 					$this->$k = json_decode($r, true);
 				}
 			}
