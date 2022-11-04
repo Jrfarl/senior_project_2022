@@ -18,7 +18,13 @@ $stop = false;
 if(!empty($_POST) && isset($_GET['TID'])){
 	foreach($_POST as $k=>$v){
 		if($k == "new_comment"){
-			$comment->InsertComment($_GET['TID'], null, $v, $me->GetAttr("User_ID"));
+			if($v != ""){
+				$comment->InsertComment($_GET['TID'], null, $v, $me->GetAttr("User_ID"));
+				header("Location: ".$_SERVER['REQUEST_URI']);
+			}else{
+				$error[] = "You cannot enter an empty comment!";
+			}
+			
 		}else{
 			if(!is_array($v)){
 				if($ticket->GetAttr($k) != $v){
@@ -148,6 +154,10 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<hr>
 							<?php }else{ ?>
 							<?php foreach($comments as $c){ ?>
+							<div class="row mb-2">
+								<div class="col-12"><span><?= $c['Comment_Text'] ?></span></div>
+							</div>
+							<hr>
 							<?php } ?>
 							<?php } ?>
 							<form name="ins_comment" method="post" action="">
