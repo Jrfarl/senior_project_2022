@@ -9,7 +9,7 @@ if(!isset($_GET['TID'])){
 		$creation_user = new internal_user($database);
 		$creation_user->GetUserFromID($ticket->GetAttr('Created_By_ID'));
 	}
-	$status = new status;
+	$status = new status($database);
 	$all_statuses = $status->GetAll();
 	$comment = new comment($database);
 	$comments = $comment->SelectAllByTicket($_GET['TID']);
