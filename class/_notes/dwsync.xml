@@ -5,8 +5,17 @@
 <file name="internal_user.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353292875480" remote="133123353300000000" Dst="1" />
 <file name="user_struct.php" server="seniorproj.gabeharman.com//var/www/html/" local="133100130420000000" remote="133100130420000000" Dst="2" />
 <file name="config.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353553843404" remote="133123353560000000" Dst="1" />
+<<<<<<< Updated upstream
 <file name="user_group.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123352018853787" remote="133123352020000000" Dst="1" />
 <file name="ticket.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123351663695759" remote="133123351670000000" Dst="1" />
 <file name="comment.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353779035002" remote="133123353780000000" Dst="1" />
 <file name="status.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123352488629596" remote="133123352490000000" Dst="1" />
+=======
+<file name="user_group.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123352020000000" remote="133123352020000000" Dst="1" />
+<file name="ticket.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123359372158964" remote="133123359380000000" Dst="1" />
+<file name="comment.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353779035002" remote="133123353780000000" Dst="1" />
+<file name="status.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123352488629596" remote="133123352490000000" Dst="1" />
+<file name="priority.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123367787953831" remote="133123367790000000" Dst="1" />
+<file name="ticket_priority.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123367790000000" remote="133123367790000000" Dst="1" />
+>>>>>>> Stashed changes
 </dwsync>

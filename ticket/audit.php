@@ -13,6 +13,8 @@ if(!isset($_GET['TID'])){
 	$all_statuses = $status->GetAll();
 	$comment = new comment($database);
 	$comments = $comment->SelectAllByTicket($_GET['TID']);
+	$priority = new ticket_priority($database);
+	$priority_names = $priority->GetAllPriorityNames();
 }
 $stop = false;
 if(!empty($_POST) && isset($_GET['TID'])){
@@ -80,7 +82,9 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						<div class="row mb-1">
 							<span class="col-12">Priority</span>
 							<select name="Priority_Level" class="form-control">
-								<option value="not_implemented"></option>
+								<?php foreach($priority_names as $p){ ?>
+									<option <?= $ticket->GetAttr('Priority_Level') == $p['Priority_Level'] ? "selected" : ""?> value="<?=$p['Priority_Level']?>"><?=$p['Priority_Name']?></option>
+								<?php } ?>
 							</select>
 						</div>
 				  <hr>
@@ -139,7 +143,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 					</div>  
 			  </div>
 			</div>
-			
+			</form>
 			<div class="card">
 			  <div class="card-header">
 				Comments
@@ -176,6 +180,6 @@ if(!empty($_POST) && isset($_GET['TID'])){
 	</div>
 
 </div>
-	</form>
+	
 <?php } ?>
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_bottom.php"); ?>

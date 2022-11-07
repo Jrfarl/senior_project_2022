@@ -14,9 +14,10 @@ $pagename = "View Tickets";
            $sql = "SELECT Ticket_ID,Title, Description, Status_Name, Last_Name, First_Name 
                    FROM Tickets
                    INNER JOIN Status on Tickets.Status_Code = Status.Status_Code
-                   INNER JOIN Users on Tickets.Created_By_ID = Users.User_ID";
+                   INNER JOIN Users on Tickets.Created_By_ID = Users.User_ID
+                   LIMIT ?, ?";
 
-            $result = $database->query($sql);
+            $result = $database->query($sql, [$page_offset, $entries_per_page]);
 
             if(isset($result) && !empty($result)) { ?>
 
@@ -44,6 +45,10 @@ $pagename = "View Tickets";
 
         </div>
 
+        <?php
+            for($page = 1; $page<= $num_pages; $page++) {  
+                echo '<a href = "list.php?page=' . $page . '">' . $page . ' </a>';  
+            } 
+        ?>
 
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_bottom.php"); ?>
-

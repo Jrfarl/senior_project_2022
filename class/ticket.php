@@ -92,7 +92,7 @@ class ticket{
 	
 	function GetPaginationNums($restrictions=null){
 		if($restrictions == null){
-			$returns = $this->db->query("SELECT count(*) FROM Tickets");
+			$returns = $this->db->query("SELECT count(*) as count FROM Tickets");
 			return $returns;
 		}
 	}
