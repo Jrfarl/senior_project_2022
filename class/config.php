@@ -1,9 +1,10 @@
 <?php 
 class config{
 	private $kvp = [];
+	private $db;
 	
-	function __construct(){
-		global $database;
+	function __construct($database){
+		$this->db =$database;
 		$returns = $database->query("SELECT `Key`, `Value` FROM `Config`");
 		foreach($returns as $r){
 			$this->kvp[$r['Key']] = $r['Value'];
@@ -18,10 +19,9 @@ class config{
 	}
 	
 	function SetKVP($key, $value){
-		global $database;
 		if(!array_key_exists($key, $this->kvp)){
 			//Insert statement	
-			$returns = $database->query('INSERT INTO `Config` (`Key`, `Value`  ) VALUES (?,?)', array($key, $value), false);
+			$returns = $this->db->query('INSERT INTO `Config` (`Key`, `Value`  ) VALUES (?,?)', array($key, $value), false);
 			if($returns== 1){
 				$this->kvp[$key] = $value;
 				return true;
@@ -30,7 +30,7 @@ class config{
 			}
 		}else{
 			//update statement
-			$returns = $database->query('UPDATE `Config` SET `Value` = ? WHERE `Key` = ?', array($value, $key), false);
+			$returns = $this->db->query('UPDATE `Config` SET `Value` = ? WHERE `Key` = ?', array($value, $key), false);
 			if($returns== 1){
 				$this->kvp[$key] = $value;
 				return true;
@@ -40,9 +40,7 @@ class config{
 		}
 	}
 	
-	function DeleteKey($input){
-		global $database;
-		
+	function DeleteKey($input){		
 		unset($this->kvp[$input]);
 		$this->kvp[$input] = null;
 	}

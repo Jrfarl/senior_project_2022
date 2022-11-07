@@ -12,7 +12,7 @@ if(isset($_SESSION['user_uid'])){
 		if(!isset($_POST['password']) || $_POST['password'] == ""){
 			$error[] = "Please insert a password";
 		}
-		$CheckUser = new internal_user();
+		$CheckUser = new internal_user($database);
 		if($CheckUser->TryLogin($_POST['username'], $_POST['password'])){
 			header("Location: dashboard.php");
 		}else{

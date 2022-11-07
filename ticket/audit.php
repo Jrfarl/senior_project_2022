@@ -4,14 +4,14 @@ $pagename = "Audit Ticket";
 if(!isset($_GET['TID'])){
 	$error[] = "A Ticket ID was not set in the url or ticket does not exist";
 }else{
-	$ticket = new ticket($_GET['TID']);
+	$ticket = new ticket($database, $_GET['TID']);
 	if($ticket->GetAttr('Created_By_ID') != ''){
-		$creation_user = new internal_user();
+		$creation_user = new internal_user($database);
 		$creation_user->GetUserFromID($ticket->GetAttr('Created_By_ID'));
 	}
 	$status = new status;
 	$all_statuses = $status->GetAll();
-	$comment = new comment();
+	$comment = new comment($database);
 	$comments = $comment->SelectAllByTicket($_GET['TID']);
 }
 $stop = false;

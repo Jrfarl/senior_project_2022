@@ -7,6 +7,11 @@ class internal_user{
 	private $Password;
 	private $Session_IP;
 	private $PROTECTED_USER_IDS = [];
+	private $db;
+	
+	function __construct($database){
+		$this->db = $database;
+	}
 	
 	function FetchUser(){
 		if(isset($_SESSION['user_uid'])){
@@ -16,8 +21,7 @@ class internal_user{
 	}
 	
 	function GetUserFromID($id){
-		global $database;
-		$user_rows = $database->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$id]);
+		$user_rows = $this->db->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$id]);
 		if(count($user_rows) > 1){
 			throw new Exception("Multiple users were found by a PK. This should not be possible!");
 		}
@@ -32,8 +36,7 @@ class internal_user{
 	}
 	
 	function DoesUsernameExist($input){
-		global $database;
-		$users_found = $database->query("SELECT count(*) as count FROM `Users` WHERE `Username` = (?)", array($input));
+		$users_found = $this->db->query("SELECT count(*) as count FROM `Users` WHERE `Username` = (?)", array($input));
 		if($users_found[0]['count'] > 0){
 			return true;
 		}else{
@@ -42,11 +45,10 @@ class internal_user{
 	}
 	
 	function TryLogin($username, $password){
-		global $database;
 		if($username == "" || $password == ""){
 			return false;
 		}
-		$users_found = $database->query("SELECT User_ID, Username, Password FROM `Users` WHERE `Username` = ?", [$username]);
+		$users_found = $this->db->query("SELECT User_ID, Username, Password FROM `Users` WHERE `Username` = ?", [$username]);
 		foreach($users_found as $uf){
 			if(password_verify($password, $uf['Password'])){
 				$_SESSION['user_uid'] = $uf['User_ID'];
@@ -59,11 +61,10 @@ class internal_user{
 	}
 	
 	function CreateUser($username, $password, $first_name, $last_name){
-		global $database;
 		if(!($this->DoesUsernameExist($username))){
-			$returns = $database->query('INSERT INTO `Users` (`First_Name`, `Last_Name`,  `Username`, `Password`) VALUES (?,?,?,?)', array($first_name, $last_name, $username, password_hash($password, PASSWORD_DEFAULT)), false);
+			$returns = $this->db->query('INSERT INTO `Users` (`First_Name`, `Last_Name`,  `Username`, `Password`) VALUES (?,?,?,?)', array($first_name, $last_name, $username, password_hash($password, PASSWORD_DEFAULT)), false);
 			if($returns== 1){
-				$_SESSION['user_uid'] = $database->query('SELECT User_ID FROM `Users` WHERE `Username` = ?', array($username), true)[0]['User_ID'];
+				$_SESSION['user_uid'] = $this->db->query('SELECT User_ID FROM `Users` WHERE `Username` = ?', array($username), true)[0]['User_ID'];
 				return true;
 			}else{
 				return false;
@@ -74,8 +75,7 @@ class internal_user{
 	}
 	
 	function GetUserFromSession(){
-		global $database;
-		$user_rows = $database->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$_SESSION['user_uid']]);
+		$user_rows = $this->db->query("SELECT * FROM `Users` WHERE `User_ID` = ?", [$_SESSION['user_uid']]);
 		if(count($user_rows) > 1){
 			throw new Exception("Multiple users were found by a PK. This should not be possible!");
 		}

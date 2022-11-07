@@ -1,7 +1,7 @@
 <?php
 $protected_page = false;
 require("masterutil.php");
-$newUser = new internal_user();
+$newUser = new internal_user($database);
 if(!$newUser->FetchUser()){
 	if(!empty($_POST)){
 		$stop = false;

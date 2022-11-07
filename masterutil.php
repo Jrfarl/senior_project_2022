@@ -22,13 +22,13 @@ require("masterconfig.php"); // Can throw unhandled exception if file is not fou
 #         require("masterutil.php");
 
 if(!isset($protected_page) || $protected_page != false){  
-	$me = new internal_user();
+	$me = new internal_user($database);
 	if(!$me->GetUserFromSession()){
 		header("Location: /login.php");
 	}
 }
 
-$config = new config();
+$config = new config($database);
 
 $CONST_SITENAME = $config->GetValue("SITE_NAME");
 

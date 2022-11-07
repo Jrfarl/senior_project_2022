@@ -1,6 +1,6 @@
 <?php
 require("masterutil.php");
-$newUser = new internal_user();
+$newUser = new internal_user($database);
 if(!$newUser->FetchUser()){
 	header("Location: login.php");
 	exit();

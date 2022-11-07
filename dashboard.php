@@ -1,7 +1,7 @@
 <?php
 require("masterutil.php");
 $pagename = "Dashboard";
-$tickets = new ticket();
+$tickets = new ticket($database);
 $unassigned = $tickets->GetUnassignedTickets();
 $unassigned_count = count($unassigned);
 ?>
