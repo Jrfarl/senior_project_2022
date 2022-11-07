@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="create.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123354564998774" remote="133123354570000000" Dst="1" />
-<<<<<<< Updated upstream
-<file name="list.php" server="seniorproj.gabeharman.com//var/www/html/" local="133118540922051642" remote="133118540930000000" Dst="2" />
-<file name="audit.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123355440960095" remote="133123355440000000" Dst="1" />
-=======
 <file name="list.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123365063534724" remote="133123365070000000" Dst="1" />
-<file name="audit.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123371612317847" remote="133123371620000000" Dst="1" />
->>>>>>> Stashed changes
+<file name="audit.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123386492026048" remote="133123386500000000" Dst="1" />
 </dwsync>

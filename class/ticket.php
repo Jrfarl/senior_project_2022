@@ -4,13 +4,14 @@ class ticket{
 	private $Title;
 	private $Status_Code;
 	private $Description;
-	private $Assigned_To_ID = [];
+	private $Assigned_To_User_ID  = [];
+	private $Assigned_To_Group_ID  = [];
 	private $Created_By_ID;
 	private $Date_Created;
 	private $Permissions = [];
 	private $Metadata = [];
 	private $Priority_Level;
-	private $json_fields = ['Metadata', 'Permissions', 'Assigned_To_ID'];
+	private $json_fields = ['Metadata', 'Permissions', 'Assigned_To_User_ID', 'Assigned_To_Group_ID'];
 	private $db;
 	
 	function __construct($database, $target_id=null){

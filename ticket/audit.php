@@ -69,7 +69,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 					<div class="form">
 						<div class="row mb-1">
 							<span class="col-12">Status</span>
-							<select name="Status_Code" class="form-control">
+							<select name="Status_Code" class="form-control bs_selpick">
 								<?php foreach($all_statuses as $as){?>
 									<option value="<?= $as['Status_Code']?>" <?= $ticket->GetAttr('Status_Code') == $as['Status_Code'] ? "selected" : ""?>><?= $as['Status_Name']?></option>
 								<?php } ?>
@@ -77,11 +77,11 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Assigned To:</span>
-							<select name="Assigned_To_ID[]" class="form-control"></select>
+							<select class="bs_selpick" multiple name="Assigned_To_ID[]"></select>
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Priority</span>
-							<select name="Priority_Level" class="form-control">
+							<select name="Priority_Level" class="form-control bs_selpick">
 								<?php foreach($priority_names as $p){ ?>
 									<option <?= $ticket->GetAttr('Priority_Level') == $p['Priority_Level'] ? "selected" : ""?> value="<?=$p['Priority_Level']?>"><?=$p['Priority_Name']?></option>
 								<?php } ?>
@@ -180,6 +180,10 @@ if(!empty($_POST) && isset($_GET['TID'])){
 	</div>
 
 </div>
-	
+
 <?php } ?>
 <?php require($CONST_TEMPLATEDIR."/base_logged_in_bottom.php"); ?>
+
+<script>
+$('.bs_selpick').selectpicker();
+</script>

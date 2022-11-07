@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title><?= $CONST_SITENAME ?> | <?= isset($pagename) ? $pagename : "" ?></title>
 <link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= $CONST_VENDORDIR?>/bootstrap_select/css/bootstrap_select_beta.css" rel="stylesheet" >
 </head>
 	
 <body>
