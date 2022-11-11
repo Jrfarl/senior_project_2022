@@ -15,6 +15,7 @@ if(!isset($_GET['TID'])){
 	$comments = $comment->SelectAllByTicket($_GET['TID']);
 	$priority = new ticket_priority($database);
 	$priority_names = $priority->GetAllPriorityNames();
+	$group = new user_group($database);
 }
 $stop = false;
 if(!empty($_POST) && isset($_GET['TID'])){
@@ -76,8 +77,24 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							</select>
 						</div>
 						<div class="row mb-1">
-							<span class="col-12">Assigned To:</span>
-							<select class="bs_selpick" multiple name="Assigned_To_ID[]"></select>
+							<span class="col-12">Assigned Group:</span>
+							<select class="form-control" multiple name="Assigned_To_Group_ID[]">
+								<optgroup label="Groups">
+									<?php foreach($group->GetAllGroups() as $g){?>
+									<option value="group_<?= $g['Group_ID']?>"><?= $g['Group_Name']?></option>
+									<?php } ?>
+								</optgroup>
+							</select>
+						</div>
+						<div class="row mb-1">
+							<span class="col-12">Assigned Users:</span>
+							<select class="form-control" multiple name="Assigned_To_User_ID[]">
+								<optgroup label="Users">
+									<?php foreach( as $g){?>
+									<option value="group_<?= $g['Group_ID']?>"><?= $g['Group_Name']?></option>
+									<?php } ?>
+								</optgroup>
+							</select>
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Priority</span>

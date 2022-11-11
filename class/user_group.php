@@ -19,6 +19,14 @@ class user_group{
 	}
 	
 	function GetAllGroups(){
-		global $database;
+		return $this->db->query("SELECT * FROM Group_Reference");
+	}
+	
+	function GetUsersInGroup(){
+		
+	}
+	
+	function GetUsersInGroups($groups){
+		return $this->db->query("SELECT DISTINCT * FROM Users WHERE User_ID in(SELECT User_ID From Group_Users WHERE Group_ID in(?))", [implode(",", $groups)]);
 	}
 }
