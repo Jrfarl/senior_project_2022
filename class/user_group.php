@@ -22,8 +22,8 @@ class user_group{
 		return $this->db->query("SELECT * FROM Group_Reference");
 	}
 	
-	function GetUsersInGroup(){
-		
+	function GetUsersInGroup($gid){
+		return $this->db->query("SELECT DISTINCT * FROM Users WHERE User_ID in(SELECT User_ID From Group_Users WHERE Group_ID = ?", [$gid]);
 	}
 	
 	function GetUsersInGroups($groups){
