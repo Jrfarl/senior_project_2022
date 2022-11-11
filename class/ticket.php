@@ -37,7 +37,7 @@ class ticket{
 		$this->Date_Created = date("Y-m-d H-i");
 		$this->Created_By_ID = $userobj->GetUID();
 		
-		$return = $this->db->query("INSERT INTO `Tickets` (Title, Status_Code, Description, Assigned_To_User_ID,Assigned_To_Group_ID , Created_By_ID, Metadata) VALUES (?,?,?,?,?,?)", [$this->Title, $this->Status_Code, $this->Description, json_encode($this->Assigned_To_User_ID),json_encode($this->Assigned_To_Group_ID),$this->Created_By_ID ,json_encode($this->Metadata)], false);
+		$return = $this->db->query("INSERT INTO `Tickets` (Title, Status_Code, Description, Assigned_To_User_ID, Assigned_To_Group_ID , Created_By_ID, Metadata) VALUES (?,?,?,?,?,?,?)", [$this->Title, $this->Status_Code, $this->Description, json_encode($this->Assigned_To_User_ID),json_encode($this->Assigned_To_Group_ID),$this->Created_By_ID ,json_encode($this->Metadata)], false);
 		if($return == 1){
 			return true;
 		}else{
