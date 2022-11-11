@@ -27,7 +27,9 @@ class user_group{
 	}
 	
 	function GetUsersInGroups($groups){
-		$prepared_groups =implode(", ", $groups);
-		return $this->db->query("SELECT DISTINCT * FROM Users WHERE User_ID in(SELECT User_ID From Group_Users WHERE Group_ID in(?))", [$prepared_groups]);
+		if(!empty($groups)){
+			return $this->db->query("SELECT DISTINCT * FROM Users WHERE User_ID in(SELECT User_ID From Group_Users WHERE Group_ID in(".implode(", ", $groups)."))");
+		}
+		return [];
 	}
 }
