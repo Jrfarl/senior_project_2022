@@ -31,4 +31,25 @@ class comment{
 		$return = $this->db->query("SELECT * FROM `Comments` WHERE Parent_Ticket_ID = ?", [$ticket_id]);
 		return $return;
 	}
+
+	function ArchiveComment($comment){
+
+		//$comment = $this->$db->query("SELECT * FROM 'Comments' WHERE Ticket_ID = ?", [$ticket_id], false);
+
+		$archiveCommentQuery = "INSERT INTO 'Archived_Comments' (
+			Comment_ID,
+			Parent_Ticket_ID,
+			Parent_Comment_ID,
+			Comment_Text,
+			Created_By_ID,
+			Date_Created
+			)
+			VALUES (?,?,?,?,?,?)";
+
+		$return = $this->db->query($archiveTicketQuery,
+		[$comment['Comment_ID'], $comment['Parent_Ticket_ID'], $comment['Parent_Comment_ID'],
+		$comment['Comment_Text'], $comment['Created_By_ID'], $comment['Date_Created']], false);
+
+		return ($return == 1);
+	}
 }

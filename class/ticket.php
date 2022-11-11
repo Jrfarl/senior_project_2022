@@ -66,6 +66,36 @@ class ticket{
 	
 	function ArchiveTicket(){
 		// Archive Ticket Here
+
+		$comment = new comment($this->db);
+		$comments = $comment->SelectAllByTicket(this->$Ticket_ID);
+
+		foreach($comments as $c){
+			$comment->ArchiveComment($c['Comment_ID']);
+		}
+		
+
+		$archiveTicketQuery = "INSERT INTO 'Archived_Tickets' (
+			Ticket_ID
+			, Title
+			, Status_Code
+			, Description
+			, Assigned_To_User_ID
+			, Assigned_To_Group_ID
+			, Created_By_ID
+			, Metadata
+			, Date_Created
+			, Priority_Level)
+			VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+		$return = $this->db->query($archiveTicketQuery, 
+			[this->$Ticket_ID, this->$Title, this->$Status_Code,
+			 this->$Description, this->$Assigned_To_User_ID,
+			 this->$Assigned_To_Group_ID, this->$Created_By_ID,
+			  this->$Metadata, this->$Date_Created, this->$Priority_Level], false);
+
+		return ($return == 1);
+
 	}
 	
 	function GetUnassignedTickets(){
