@@ -81,7 +81,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<select class="form-control" multiple name="Assigned_To_Group_ID[]">
 								<optgroup label="Groups">
 									<?php foreach($group->GetAllGroups() as $g){?>
-									<option value="group_<?= $g['Group_ID']?>"><?= $g['Group_Name']?></option>
+									<option value="<?= $g['Group_ID']?>" <?= in_array($g['Group_ID'], $ticket->GetAttr("Assigned_To_Group_ID")) ? "selected" : ""?>><?= $g['Group_Name']?></option>
 									<?php } ?>
 								</optgroup>
 							</select>
@@ -90,8 +90,9 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<span class="col-12">Assigned Users:</span>
 							<select class="form-control" multiple name="Assigned_To_User_ID[]">
 								<optgroup label="Users">
-									<?php foreach( as $g){?>
-									<option value="group_<?= $g['Group_ID']?>"><?= $g['Group_Name']?></option>
+									<?php
+									foreach($group->GetUsersInGroups($ticket->GetAttr("Assigned_To_Group_ID")) as $gu){?>
+									<option value="<?= $gu['User_ID']?>" <?= in_array($gu['User_ID'], $ticket->GetAttr("Assigned_To_User_ID")) ? "selected" : ""?>><?= $gu['First_Name']." ".$gu['Last_Name']." (".$gu['Username'].")"?></option>
 									<?php } ?>
 								</optgroup>
 							</select>
