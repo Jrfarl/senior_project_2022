@@ -9,7 +9,7 @@ if(!isset($_GET['TID'])){
 
 	if(isset($_GET['archive']) && $_GET['archive'] == true){
 		$ticket->ArchiveTicket($_GET['TID']);
-		//header("Location: list.php");
+		header("Location: list.php");
 	}
 
 	if($ticket->GetAttr('Created_By_ID') != ''){
