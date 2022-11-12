@@ -8,8 +8,8 @@ if(!isset($_GET['TID'])){
 	$ticket = new ticket($database, $_GET['TID']);
 
 	if(isset($_GET['archive']) && $_GET['archive'] == true){
-		$ticket->ArchiveTicket;
-		header("Location: index.php");
+		$ticket->ArchiveTicket($_GET['TID']);
+		//header("Location: list.php");
 	}
 
 	if($ticket->GetAttr('Created_By_ID') != ''){
@@ -144,7 +144,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						<div class="row mb-1">
 							<span class="text-center mb-1">Actions</span>
 								<input type="submit" value="Update Ticket" class="btn btn-outline-primary col-12 mb-2">
-								<a class="btn btn-outline-danger col-12" href="&archive=true">Archive Ticket</a>
+								<a id="Archive Button" class="btn btn-outline-danger col-12" href="<?php echo 'audit.php?TID=' . $_GET['TID'] . '&archive=true'?>">Archive Ticket</a>
 								<!--<input type="button" class="btn btn-outline-danger col-12" value="Archive Ticket"></input>-->
 							</div>
 					</div>  
