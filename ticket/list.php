@@ -25,7 +25,7 @@ $pagename = "View Tickets";
 
                 $page_offset = ($page - 1) * $entries_per_page;
 
-            $sql = "SELECT Ticket_ID,Title, Description, Status_Name, Last_Name, First_Name 
+            $sql = "SELECT Ticket_ID,Title, Status_Name, Last_Name, First_Name 
                     FROM Tickets
                     INNER JOIN Status on Tickets.Status_Code = Status.Status_Code
                     INNER JOIN Users on Tickets.Created_By_ID = Users.User_ID

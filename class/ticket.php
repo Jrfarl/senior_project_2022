@@ -65,38 +65,19 @@ class ticket{
 	}
 	
 	function ArchiveTicket($tid){
-		// Archive Ticket Here
+
+		//$comment = new comment($this->db);
+		//$comments = $comment->SelectAllByTicket($tid);
 		/*
-		$ArchivedTicket = $database->query("SELECT * FROM `Tickets` WHERE `Ticket_ID` = ?", [$tid], false);
-
-		$archiveTicketQuery = "INSERT INTO 'Archived_Tickets' (
-			Ticket_ID
-			, Title
-			, Status_Code
-			, Description
-			, Assigned_To_User_ID
-			, Assigned_To_Group_ID
-			, Created_By_ID
-			, Metadata
-			, Date_Created
-			, Priority_Level)
-			VALUES (?,?,?,?,?,?,?,?,?,?)";
-
-		$return = $this->db->query($archiveTicketQuery, 
-			[$ArchivedTicket['Ticket_ID'], $ArchivedTicket['Title'], $ArchivedTicket['Status_Code'],
-			 $ArchivedTicket['Description'], $ArchivedTicket['Assigned_To_User_ID'],
-			 $ArchivedTicket['Assigned_To_Group_ID'], $ArchivedTicket['Created_By_ID'],
-			  $ArchivedTicket['Metadata'], $ArchivedTicket['Date_Created'], $ArchivedTicket['Priority_Level']], false);
-			*/
-
-		$comment = new comment($this->db);
-		$comments = $comment->SelectAllByTicket($tid);
-
 		foreach($comments as $c){
 			$comment->ArchiveComment($c['Comment_ID']);
 		}
-
-		$return = $this->db->query("INSERT INTO 'Archived_Tickets' SELECT * FROM 'Tickets' WHERE 'Ticket_ID' = ?", [$tid], false);
+		*/
+		$return = $this->db->query("INSERT INTO Archived_Tickets 
+		(Ticket_ID, Title, Status_Code, Description, Assigned_To_User_ID, Assigned_To_Group_ID, Created_By_ID, Date_Created, Metadata, Priority_Level )
+		 (SELECT Ticket_ID, Title, Status_Code, Description, Assigned_To_User_ID, Assigned_To_Group_ID, Created_By_ID, Date_Created, Metadata, Priority_Level
+		  FROM Tickets WHERE Ticket_ID = ?
+		)", [$tid], false);
 		
 		return ($return == 1);
 
