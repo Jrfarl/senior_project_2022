@@ -11,6 +11,14 @@ if(!$newUser->FetchUser()){
 		}
 		// Setup password length requirements and other requirements.
 		
+		if(!isset($_POST['username']) || !isset($_POST['password']) ||
+			 !isset($_POST['fname']) || !isset($_POST['lname']) ||
+			 $_POST['username'] == "" || $_POST['password'] == "" || 
+			 $_POST['fname'] == "" || $_POST['lname'] = ""){
+				$error[] = "Please fill in all fields";
+				$stop = true;
+			 }
+
 		if($newUser->DoesUsernameExist($_POST['username'])){
 			$error[] = "That username is already taken!";
 			$stop = true;
