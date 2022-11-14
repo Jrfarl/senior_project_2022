@@ -4,7 +4,14 @@ $pagename = "Audit Ticket";
 if(!isset($_GET['TID'])){
 	$error[] = "A Ticket ID was not set in the url or ticket does not exist";
 }else{
+	
 	$ticket = new ticket($database, $_GET['TID']);
+
+	if(isset($_GET['archive']) && $_GET['archive'] == true){
+		$ticket->ArchiveTicket($_GET['TID']);
+		//header("Location: list.php");
+	}
+
 	if($ticket->GetAttr('Created_By_ID') != ''){
 		$creation_user = new internal_user($database);
 		$creation_user->GetUserFromID($ticket->GetAttr('Created_By_ID'));
@@ -137,8 +144,9 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						<div class="row mb-1">
 							<span class="text-center mb-1">Actions</span>
 								<input type="submit" value="Update Ticket" class="btn btn-outline-primary col-12 mb-2">
-								<input type="button" class="btn btn-outline-danger col-12" value="Archive Ticket"></input>
-						</div>
+								<a id="Archive Button" class="btn btn-outline-danger col-12" href="<?php echo 'audit.php?TID=' . $_GET['TID'] . '&archive=true'?>">Archive Ticket</a>
+								<!--<input type="button" class="btn btn-outline-danger col-12" value="Archive Ticket"></input>-->
+							</div>
 					</div>  
 			  </div>
 			</div>
