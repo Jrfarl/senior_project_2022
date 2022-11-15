@@ -124,9 +124,13 @@ class internal_user{
 				$groups = $group->GetUserGroups();
 				foreach($groups as $g){
 					$this_group_perms = $group->GetGroupPermissions($g['Group_ID']);
+					
 					foreach($this_group_perms as $granted_perm){
 						$granted_perm = $granted_perm["Permission"];
 						if(strtoupper($granted_perm) == strtoupper($permissions[$module][$permission])){
+							return true;
+						}
+						if($granted_perm == "ADMIN_BYPASS"){
 							return true;
 						}
 					}

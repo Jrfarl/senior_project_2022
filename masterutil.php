@@ -46,6 +46,7 @@ function Get_Global_Permissions(){
 	$permissions['ticket']['change_ticket_groups'] = "CHANGE_TICKET_GROUPS";
 	$permissions['ticket']['change_ticket_users'] = "CHANGE_TICKET_USERS";
 	$permissions['ticket']['change_ticket_title'] = "CHANGE_TICKET_TITLE";
+	$permissions['admin']['bypass_permissions'] = "ADMIN_BYPASS";
 	$permissions['admin']['view_admin_area'] = "VIEW_ADMIN_AREA";
 	$permissions['admin']['view_user_management'] = "VIEW_USER_MANAGEMENT";
 	$permissions['admin']['view_group_management'] = "VIEW_GROUP_MANAGEMENT";
