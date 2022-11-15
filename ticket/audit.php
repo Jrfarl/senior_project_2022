@@ -1,3 +1,4 @@
+
 <?php
 require("../masterutil.php");
 $pagename = "Audit Ticket";
@@ -9,7 +10,7 @@ if(!isset($_GET['TID'])){
 
 	if(isset($_GET['archive']) && $_GET['archive'] == true){
 		$ticket->ArchiveTicket($_GET['TID']);
-		//header("Location: list.php");
+		header("Location: list.php");
 	}
 
 	if($ticket->GetAttr('Created_By_ID') != ''){
@@ -213,3 +214,4 @@ if(!empty($_POST) && isset($_GET['TID'])){
 <script>
 $('.bs_selpick').selectpicker();
 </script>
+
