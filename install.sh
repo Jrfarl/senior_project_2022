@@ -13,3 +13,9 @@ mv * /var/www/html/
 cd /var/www/html 
 
 rm -r ~/senior_project_2022/ index.html 
+
+mysql < CreateTablesMySql.sql 
+
+mysql < DatabaseInitialization.sql 
+
+mysql < mysql_user_setup.sql 
