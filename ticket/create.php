@@ -12,7 +12,7 @@ if(!empty($_POST)){
 		$stop = true;
 	}
 	if(!$stop){
-		$ticket = new ticket();
+		$ticket = new ticket($database);
 		$return = $ticket->CreateTicket($_POST['title'], $_POST['narrative'], $me);
 		if($return == true){
 			header("Location: ".$_SERVER['PHP_SELF']."?success");

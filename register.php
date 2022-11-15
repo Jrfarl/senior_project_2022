@@ -1,7 +1,10 @@
 <?php
 $protected_page = false;
 require("masterutil.php");
-$newUser = new internal_user();
+
+$pagename="Register";
+
+$newUser = new internal_user($database);
 if(!$newUser->FetchUser()){
 	if(!empty($_POST)){
 		$stop = false;
@@ -11,6 +14,14 @@ if(!$newUser->FetchUser()){
 		}
 		// Setup password length requirements and other requirements.
 		
+		if(!isset($_POST['username']) || !isset($_POST['password']) ||
+			 !isset($_POST['fname']) || !isset($_POST['lname']) ||
+			 $_POST['username'] == "" || $_POST['password'] == "" || 
+			 $_POST['fname'] == "" || $_POST['lname'] = ""){
+				$error[] = "Please fill in all fields";
+				$stop = true;
+			 }
+
 		if($newUser->DoesUsernameExist($_POST['username'])){
 			$error[] = "That username is already taken!";
 			$stop = true;
@@ -34,11 +45,12 @@ if(!$newUser->FetchUser()){
 <html>
 <head>
 <meta charset="utf-8">
-<title><?= $sitename ?> | Register</title>
+<title><?= $CONST_SITENAME ?> | <?= isset($pagename) ? $pagename : "" ?></title>
 <link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
+
 	<?php if(!empty($error)){?>
 	<div class="alert alert-danger" role="alert">
 	 <?php foreach($error as $k=>$e){
@@ -72,14 +84,39 @@ if(!$newUser->FetchUser()){
 		}?>
 	</div>
 	<?php } ?>
-	<form action="" method="post">
-		<input type="text" name="username" placeholder="Username">
-		<input type="password" name="password" placeholder="Password">
-		<input type="password" name="password_confirm" placeholder="Confirm Password">
-		<input type="text" name="fname" placeholder="First Name">
-		<input type="text" name="lname" placeholder="Last Name">
-		<input type="submit" placeholder="Register" class="btn btn-outline-primary">
+	<div class="row align-items-center g-lg-5 py-5">
+    
+    <div class ="col-md-10 mx-auto col-lg-5">
+    
+      <form class="p-4 border rounded-3 bg-light" action="" method="post">
+      <h3 class="text-center">Register</h3>
+      	<div class="form-floating mb-3">
+		<input class="form-control" type="text" name="username" placeholder="Username">
+        <label for="username">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+		<input class="form-control" type="password" name="password" placeholder="Password">
+        <label for="password">Password</label>
+        </div>
+        <div class="form-floating mb-3">
+		<input class="form-control" type="password" name="password_confirm" placeholder="Confirm Password">
+        <label for="password_confirm">Confirm Password</label>
+        </div>
+        <div class="form-floating mb-3">
+		<input class="form-control" type="text" name="fname" placeholder="First Name">
+        <label for="fname">First Name</label>
+        </div>
+        <div class="form-floating mb-3">
+		<input class="form-control" type="text" name="lname" placeholder="Last Name">
+        <label for="lname">Last Name</label>
+        </div>
+        <div class="row">
+			<input type="submit" placeholder="Register" class="btn btn-outline-primary ">
+        </div>
+
 	</form>
+    </div>
+    </div>
 </body>
 </html>
 <script src="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/js/bootstrap.min.js"></script>

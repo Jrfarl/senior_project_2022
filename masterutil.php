@@ -22,23 +22,25 @@ require("masterconfig.php"); // Can throw unhandled exception if file is not fou
 #         require("masterutil.php");
 
 if(!isset($protected_page) || $protected_page != false){  
-	$me = new internal_user();
+	$me = new internal_user($database);
 	if(!$me->GetUserFromSession()){
 		header("Location: /login.php");
 	}
 }
 
-$config = new config();
+$config = new config($database);
 
 $CONST_SITENAME = $config->GetValue("SITE_NAME");
 
 function Get_Global_Permissions(){
 	$permissions = [];
-	$permissions['ticket']['create'] = "FORUM_CREATE";
-	$permissions['ticket']['modify'];
-	$permissions['ticket']['delete'];
-	$permissions['ticket']['comment'];
-	$permissions['ticket']['archive'];
+	$permissions['core']['log_in'] = "CORE_LOG_IN";
+	$permissions['ticket']['create'] = "TICKET_CREATE";
+	$permissions['admin']['view_admin_area'] = "VIEW_ADMIN_AREA";
+//	$permissions['ticket']['modify'];
+//	$permissions['ticket']['delete'];
+//	$permissions['ticket']['comment'];
+//	$permissions['ticket']['archive'];
 	return $permissions;
 }
 
