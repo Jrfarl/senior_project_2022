@@ -148,4 +148,10 @@ class internal_user{
 	function GetAllUsers_Minimal(){
 		return $this->db->query("SELECT User_ID, First_Name, Last_Name, Username, Email FROM Users");
 	}
+	
+	function ResolveToUsername($uid){
+		$return = $this->db->query("SELECT User_ID, First_Name, Last_Name, Username, Email FROM Users WHERE User_ID = ?", [$uid]);
+		print_r($return);
+		return $return;
+	}
 }

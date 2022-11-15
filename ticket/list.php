@@ -72,12 +72,16 @@ foreach($group_tickets as $gt){
 					</thead> 
 					<tbody>
 
-						<?php foreach($tickets as $t){ ?>
+						<?php foreach($tickets as $t){ 
+						$user = $me->ResolveToUsername($t['Created_By_ID']);
+						
+						?>
+					
 						<tr>
 							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $t['Ticket_ID'] ?></a></td>
 							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $t['Title'] ?></a></td>
 							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $statuses[$t['Status_Code']] ?></a></td>
-							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $t['Created_By_ID'] ?></a></td>
+							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $user['Last_Name'].", ".$user['First_Name'] ?></a></td>
 							<td><a href="audit.php?TID=<?= $t['Ticket_ID'] ?>"><?= $t['Priority_Level'] ?></a></td>
 						</tr>
 						<?php } ?>
