@@ -50,6 +50,7 @@ if(!$newUser->FetchUser()){
 </head>
 
 <body>
+
 	<?php if(!empty($error)){?>
 	<div class="alert alert-danger" role="alert">
 	 <?php foreach($error as $k=>$e){
@@ -112,6 +113,7 @@ if(!$newUser->FetchUser()){
         <div class="row">
 			<input type="submit" placeholder="Register" class="btn btn-outline-primary ">
         </div>
+
 	</form>
     </div>
     </div>

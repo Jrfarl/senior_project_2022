@@ -38,6 +38,7 @@ class comment{
 		(Comment_ID, Parent_Ticket_ID, Parent_Comment_ID, Comment_Text, Date_Created, Created_By_ID )
 		 (SELECT Comment_ID, Parent_Ticket_ID, Parent_Comment_ID, Comment_Text, Date_Created, Created_By_ID
 		  FROM Comments WHERE Comment_ID = ?)", [$comment_id], false);
+
 		return ($return == 1);
 	}
 }

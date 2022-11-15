@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="masterutil.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123354212032507" remote="133123354220000000" Dst="1" />
-<file name="masterconfig.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112602717219072" remote="133112602730000000" Dst="2" />
+<file name="masterutil.php" server="seniorproj.gabeharman.com//var/www/html/" local="133128284879218914" remote="133128284900000000" Dst="1" />
+<file name="masterconfig.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112602717219072" remote="133112638730000000" Dst="1" />
 <file name="login.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123354101915719" remote="133123354100000000" Dst="1" />
 <file name="untitled.php" server="seniorproj.gabeharman.com//var/www/html/" local="133100108675440413" remote="133100108680000000" Dst="2" />
-<file name="phpinfo.php" server="seniorproj.gabeharman.com//var/www/html/" local="133100117091969845" remote="133100117100000000" Dst="2" />
-<file name="register.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123354272279178" remote="133123354280000000" Dst="1" />
+<file name="phpinfo.php" server="seniorproj.gabeharman.com//var/www/html/" local="133128624644190218" remote="133128624640000000" Dst="1" />
+<file name="register.php" server="seniorproj.gabeharman.com//var/www/html/" local="133128269219630430" remote="133128269220000000" Dst="1" />
 <file name="index.html" server="seniorproj.gabeharman.com//var/www/html/" local="133082376010000000" remote="133082376010000000" Dst="2" />
-<file name="dashboard.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353987636667" remote="133123353990000000" Dst="1" />
+<file name="dashboard.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353990000000" remote="133123353990000000" Dst="1" />
 <file name="index.php" server="seniorproj.gabeharman.com//var/www/html/" local="133123353974756648" remote="133123353980000000" Dst="1" />
 <file name="logout.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112609103998453" remote="133112609120000000" Dst="2" />
-<file name="checkfile.php" server="seniorproj.gabeharman.com//var/www/html/" local="133118166656143079" remote="133118166660000000" Dst="2" />
+<file name="checkfile.php" server="seniorproj.gabeharman.com//var/www/html/" local="133128267705419076" remote="133128267700000000" Dst="1" />
+<file name=".htaccess" server="seniorproj.gabeharman.com//var/www/html/" local="133128346141767109" remote="133128346280000000" Dst="1" />
 </dwsync>

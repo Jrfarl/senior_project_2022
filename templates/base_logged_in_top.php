@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title><?= $CONST_SITENAME ?> | <?= isset($pagename) ? $pagename : "" ?></title>
 <link href="<?= $CONST_VENDORDIR?>/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?= $CONST_VENDORDIR?>/bootstrap_select/css/bootstrap_select_beta.css" rel="stylesheet" >
+<link href="<?= $CONST_VENDORDIR?>/datatables/jquery_datatables_min.css" rel="stylesheet">
 </head>
 	
 <body>
@@ -25,9 +25,11 @@
 		<li class="nav-item">
           <a class="nav-link" href="/ticket/list.php">View Tickets</a>
         </li>
+		  <?php if($me->CheckPermission("admin", "view_admin_area")){ ?>
 		<li class="nav-item">
           <a class="nav-link" href="/admin/index.php">Administrator</a>
         </li>
+		  <?php } ?>
 <!--
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

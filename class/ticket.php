@@ -65,18 +65,20 @@ class ticket{
 	}
 	
 	function ArchiveTicket($tid){
-		
+
 		$this->db->query("INSERT INTO Archived_Tickets 
 		(Ticket_ID, Title, Status_Code, Description, Assigned_To_User_ID, Assigned_To_Group_ID, Created_By_ID, Date_Created, Metadata, Priority_Level )
 		 (SELECT Ticket_ID, Title, Status_Code, Description, Assigned_To_User_ID, Assigned_To_Group_ID, Created_By_ID, Date_Created, Metadata, Priority_Level
 		  FROM Tickets WHERE Ticket_ID = ?
 		)", [$tid], false);
 
+
 		$comment = new comment($this->db);
 		$comments = $comment->SelectAllByTicket($tid);
 
 		foreach($comments as $c){
 			$comment->ArchiveComment($c['Comment_ID']);
+
 			$comment->DeleteComment($c['Comment_ID']);
 		}
 		

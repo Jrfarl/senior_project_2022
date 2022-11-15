@@ -6,6 +6,7 @@ class internal_user{
 	private $Username;
 	private $Password;
 	private $Session_IP;
+	private $User_Status;
 	private $PROTECTED_USER_IDS = [];
 	private $db;
 	
@@ -102,11 +103,44 @@ class internal_user{
 		return null;
 	}
 	
-	function CheckPermission($permission){
+	function SetAttr($key, $value){
+		if(property_exists($this, $key)){
+			$this->db->query("UPDATE Users SET ".$key." = ? WHERE User_ID = ?", [ $value, $this->User_ID], false);
+			$this->$key = $value;
+		}
+	}
+	
+	function CheckPermission($module, $permission){
 		
+		$permissions = Get_Global_Permissions();
+		
+		if(array_key_exists($module, $permissions)){
+			if(!empty($permissions[$module][$permission])){
+				if(strtolower($this->Username) == "administrator"){
+					return true; // Global bypass for the user "administrator"
+				}
+				
+				$group = new user_group($this->db, $this);
+				$groups = $group->GetUserGroups();
+				foreach($groups as $g){
+					$this_group_perms = $group->GetGroupPermissions($g['Group_ID']);
+					foreach($this_group_perms as $granted_perm){
+						$granted_perm = $granted_perm["Permission"];
+						if(strtoupper($granted_perm) == strtoupper($permissions[$module][$permission])){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	function GetUID(){
 		return $this->User_ID;
+	}
+	
+	function GetAllUsers_Minimal(){
+		return $this->db->query("SELECT User_ID, First_Name, Last_Name, Username, Email FROM Users");
 	}
 }
