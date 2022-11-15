@@ -19,3 +19,5 @@ mysql < CreateTablesMySql.sql
 mysql < DatabaseInitialization.sql 
 
 mysql < mysql_user_setup.sql 
+
+rm CreateTablesMySql.sql DatabaseInitialization.sql mysql_user_setup.sql
