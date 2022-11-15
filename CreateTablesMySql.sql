@@ -14,22 +14,7 @@ CREATE TABLE `Users` (
   `Email` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`User_ID`),
   UNIQUE KEY `Username_UNIQUE` (`Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `Tickets` (
-  `Ticket_ID` int NOT NULL AUTO_INCREMENT,
-  `Title` varchar(128) NOT NULL,
-  `Status_Code` int NOT NULL DEFAULT '0',
-  `Description` text,
-  `Assigned_To_User_ID` text,
-  `Created_By_ID` int NOT NULL,
-  `Date_Created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `Metadata` text,
-  `Priority_Level` text,
-  `Assigned_To_Group_ID` text,
-  PRIMARY KEY (`Ticket_ID`),
-  KEY `fk_Tickets_created_by_idx` (`Created_By_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `Status` (
   `Status_Code` int NOT NULL,
@@ -47,21 +32,7 @@ CREATE TABLE `Group_Reference` (
   `Group_ID` int NOT NULL AUTO_INCREMENT,
   `Group_Name` varchar(128) NOT NULL,
   PRIMARY KEY (`Group_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `Group_Users` (
-  `Line_ID` int NOT NULL AUTO_INCREMENT,
-  `User_ID` int NOT NULL,
-  `Group_ID` int NOT NULL,
-  PRIMARY KEY (`Line_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `Group_Permissions` (
-  `Line_ID` int NOT NULL AUTO_INCREMENT,
-  `Group_ID` int NOT NULL,
-  `Permission` text NOT NULL,
-  PRIMARY KEY (`Line_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `Config` (
   `Config_ID` int NOT NULL AUTO_INCREMENT,
@@ -69,7 +40,27 @@ CREATE TABLE `Config` (
   `Value` varchar(128) NOT NULL,
   PRIMARY KEY (`Config_ID`),
   UNIQUE KEY `Key_UNIQUE` (`Key`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `Tickets` (
+  `Ticket_ID` int NOT NULL AUTO_INCREMENT,
+  `Title` varchar(128) NOT NULL,
+  `Status_Code` int NOT NULL DEFAULT '0',
+  `Description` text,
+  `Assigned_To_User_ID` text,
+  `Created_By_ID` int NOT NULL,
+  `Date_Created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `Metadata` text,
+  `Priority_Level` int DEFAULT NULL,
+  `Assigned_To_Group_ID` text,
+  PRIMARY KEY (`Ticket_ID`),
+  KEY `fk_Tickets_created_by_idx` (`Created_By_ID`),
+  KEY `FK_Ticket_Status_Code_idx` (`Status_Code`),
+  KEY `FK_Ticket_Priority_Level_idx` (`Priority_Level`),
+  CONSTRAINT `FK_Ticket_Created_By_User` FOREIGN KEY (`Created_By_ID`) REFERENCES `Users` (`User_ID`),
+  CONSTRAINT `FK_Ticket_Priority_Level` FOREIGN KEY (`Priority_Level`) REFERENCES `Priority` (`Priority_Level`),
+  CONSTRAINT `FK_Ticket_Status_Code` FOREIGN KEY (`Status_Code`) REFERENCES `Status` (`Status_Code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `Comments` (
   `Comment_ID` int NOT NULL AUTO_INCREMENT,
@@ -78,8 +69,34 @@ CREATE TABLE `Comments` (
   `Comment_Text` tinytext NOT NULL,
   `Date_Created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Created_By_ID` int NOT NULL,
-  PRIMARY KEY (`Comment_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Comment_ID`),
+  KEY `FK_Comments_Parent_Ticket_idx` (`Parent_Ticket_ID`),
+  KEY `FK_Comments_Parent_Comments_idx` (`Parent_Comment_ID`),
+  KEY `FK_Comments_Created_By_User_idx` (`Created_By_ID`),
+  CONSTRAINT `FK_Comments_Created_By_User` FOREIGN KEY (`Created_By_ID`) REFERENCES `Users` (`User_ID`),
+  CONSTRAINT `FK_Comments_Parent_Comments` FOREIGN KEY (`Parent_Comment_ID`) REFERENCES `Comments` (`Comment_ID`),
+  CONSTRAINT `FK_Comments_Parent_Ticket` FOREIGN KEY (`Parent_Ticket_ID`) REFERENCES `Tickets` (`Ticket_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `Group_Users` (
+  `Line_ID` int NOT NULL AUTO_INCREMENT,
+  `User_ID` int NOT NULL,
+  `Group_ID` int NOT NULL,
+  PRIMARY KEY (`Line_ID`),
+  KEY `FK_Group_User_User_ID_idx` (`User_ID`),
+  KEY `FK_Group_Users_Group_ID_idx` (`Group_ID`),
+  CONSTRAINT `FK_Group_Users_Group_ID` FOREIGN KEY (`Group_ID`) REFERENCES `Group_Reference` (`Group_ID`),
+  CONSTRAINT `FK_Group_Users_User_ID` FOREIGN KEY (`User_ID`) REFERENCES `Users` (`User_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `Group_Permissions` (
+  `Line_ID` int NOT NULL AUTO_INCREMENT,
+  `Group_ID` int NOT NULL,
+  `Permission` text NOT NULL,
+  PRIMARY KEY (`Line_ID`),
+  KEY `FK_Group_Permissions_Group_ID_idx` (`Group_ID`),
+  CONSTRAINT `FK_Group_Permissions_Group_ID` FOREIGN KEY (`Group_ID`) REFERENCES `Group_Reference` (`Group_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `Archived_Tickets` (
   `Ticket_ID` int NOT NULL,
@@ -91,9 +108,15 @@ CREATE TABLE `Archived_Tickets` (
   `Metadata` text,
   `Date_Created` datetime DEFAULT NULL,
   `Date_Archived` datetime DEFAULT CURRENT_TIMESTAMP,
-  `Priority_Level` varchar(45) DEFAULT NULL,
+  `Priority_Level` int DEFAULT NULL,
   `Assigned_To_Group_ID` text,
-  PRIMARY KEY (`Ticket_ID`)
+  PRIMARY KEY (`Ticket_ID`),
+  KEY `FK_Archived_Tickets_Created_By_User_idx` (`Created_By_ID`),
+  KEY `FK_Archived_Tickets_Status_Code_idx` (`Status_Code`),
+  KEY `FK_Archived_Tickets_Priority_Level_idx` (`Priority_Level`),
+  CONSTRAINT `FK_Archived_Tickets_Created_By_User` FOREIGN KEY (`Created_By_ID`) REFERENCES `Users` (`User_ID`),
+  CONSTRAINT `FK_Archived_Tickets_Priority_Level` FOREIGN KEY (`Priority_Level`) REFERENCES `Priority` (`Priority_Level`),
+  CONSTRAINT `FK_Archived_Tickets_Status_Code` FOREIGN KEY (`Status_Code`) REFERENCES `Status` (`Status_Code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `Archived_Comments` (
@@ -103,5 +126,10 @@ CREATE TABLE `Archived_Comments` (
   `Comment_Text` tinytext NOT NULL,
   `Date_Created` datetime NOT NULL,
   `Created_By_ID` int NOT NULL,
-  PRIMARY KEY (`Comment_ID`)
+  PRIMARY KEY (`Comment_ID`),
+  KEY `FK_Archived_Comments_Parent_Ticket_idx` (`Parent_Ticket_ID`),
+  KEY `FK_Archived_Comments_Created_By_User_idx` (`Created_By_ID`),
+  KEY `FK_Archived_Comments_Parent_Comment_idx` (`Parent_Comment_ID`),
+  CONSTRAINT `FK_Archived_Comments_Created_By_User` FOREIGN KEY (`Created_By_ID`) REFERENCES `Users` (`User_ID`),
+  CONSTRAINT `FK_Archived_Comments_Parent_Ticket` FOREIGN KEY (`Parent_Ticket_ID`) REFERENCES `Archived_Tickets` (`Ticket_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
