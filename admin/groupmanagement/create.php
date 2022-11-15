@@ -1,6 +1,11 @@
 <?php
 require("../../masterutil.php");
 $pagename = "Group Management";
+
+if(!$me->CheckPermission("admin", "create_new_group")){
+	header("Location: /dashboard.php");
+}
+
 $group_controller = new user_group($database);
 $permissions = Get_Global_Permissions();
 

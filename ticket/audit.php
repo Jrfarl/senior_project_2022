@@ -1,4 +1,3 @@
-
 <?php
 require("../masterutil.php");
 $pagename = "Audit Ticket";
@@ -7,10 +6,11 @@ if(!isset($_GET['TID'])){
 }else{
 	
 	$ticket = new ticket($database, $_GET['TID']);
-
-	if(isset($_GET['archive']) && $_GET['archive'] == true){
-		$ticket->ArchiveTicket($_GET['TID']);
-		header("Location: list.php");
+	if($me->CheckPermission("ticket", "archive")){
+		if(isset($_GET['archive']) && $_GET['archive'] == true){
+			$ticket->ArchiveTicket($_GET['TID']);
+			header("Location: list.php");
+		}
 	}
 
 	if($ticket->GetAttr('Created_By_ID') != ''){
@@ -28,12 +28,15 @@ if(!isset($_GET['TID'])){
 $stop = false;
 if(!empty($_POST) && isset($_GET['TID'])){
 	foreach($_POST as $k=>$v){
+		
 		if($k == "new_comment"){
-			if($v != ""){
-				$comment->InsertComment($_GET['TID'], null, $v, $me->GetAttr("User_ID"));
-				header("Location: ".$_SERVER['REQUEST_URI']);
-			}else{
-				$error[] = "You cannot enter an empty comment!";
+			if($me->CheckPermission("ticket", "create_ticket_comment")){
+				if($v != ""){
+					$comment->InsertComment($_GET['TID'], null, $v, $me->GetAttr("User_ID"));
+					header("Location: ".$_SERVER['REQUEST_URI']);
+				}else{
+					$error[] = "You cannot enter an empty comment!";
+				}
 			}
 			
 		}else{
@@ -80,13 +83,13 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<span class="col-12">Status</span>
 							<select name="Status_Code" class="form-control bs_selpick">
 								<?php foreach($all_statuses as $as){?>
-									<option value="<?= $as['Status_Code']?>" <?= $ticket->GetAttr('Status_Code') == $as['Status_Code'] ? "selected" : ""?>><?= $as['Status_Name']?></option>
+									<option value="<?= $as['Status_Code']?>" <?= $ticket->GetAttr('Status_Code') == $as['Status_Code'] ? "selected" : ""?> <?= ($me->CheckPermission("ticket", "change_ticket_status")) == true ? "" : "disabled" ?>><?= $as['Status_Name']?></option>
 								<?php } ?>
 							</select>
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Assigned Group:</span>
-							<select class="form-control" multiple name="Assigned_To_Group_ID[]">
+							<select class="form-control" multiple name="Assigned_To_Group_ID[]" <?= ($me->CheckPermission("ticket", "change_ticket_groups")) == true ? "" : "disabled" ?>>
 								<optgroup label="Groups">
 									<?php foreach($group->GetAllGroups() as $g){?>
 									<option value="<?= $g['Group_ID']?>" <?= in_array($g['Group_ID'], $ticket->GetAttr("Assigned_To_Group_ID")) ? "selected" : ""?>><?= $g['Group_Name']?></option>
@@ -96,7 +99,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						</div>
 						<div class="row mb-1">
 							<span class="col-12">Assigned Users:</span>
-							<select class="form-control" multiple name="Assigned_To_User_ID[]">
+							<select class="form-control" multiple name="Assigned_To_User_ID[]" <?= ($me->CheckPermission("ticket", "change_ticket_users")) == true ? "" : "disabled" ?>>
 								<optgroup label="Users">
 									<?php
 									foreach($group->GetUsersInGroups($ticket->GetAttr("Assigned_To_Group_ID")) as $gu){?>
@@ -109,7 +112,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<span class="col-12">Priority</span>
 							<select name="Priority_Level" class="form-control bs_selpick">
 								<?php foreach($priority_names as $p){ ?>
-									<option <?= $ticket->GetAttr('Priority_Level') == $p['Priority_Level'] ? "selected" : ""?> value="<?=$p['Priority_Level']?>"><?=$p['Priority_Name']?></option>
+									<option <?= $ticket->GetAttr('Priority_Level') == $p['Priority_Level'] ? "selected" : ""?> value="<?=$p['Priority_Level']?>"  <?= ($me->CheckPermission("ticket", "change_ticket_priority")) == true ? "" : "disabled" ?>><?=$p['Priority_Name']?></option>
 								<?php } ?>
 							</select>
 						</div>
@@ -145,7 +148,9 @@ if(!empty($_POST) && isset($_GET['TID'])){
 						<div class="row mb-1">
 							<span class="text-center mb-1">Actions</span>
 								<input type="submit" value="Update Ticket" class="btn btn-outline-primary col-12 mb-2">
+								 <?php if($me->CheckPermission("ticket", "archive")){ ?>
 								<a id="Archive Button" class="btn btn-outline-danger col-12" href="<?php echo 'audit.php?TID=' . $_GET['TID'] . '&archive=true'?>">Archive Ticket</a>
+							<?php } ?>
 								<!--<input type="button" class="btn btn-outline-danger col-12" value="Archive Ticket"></input>-->
 							</div>
 					</div>  
@@ -161,7 +166,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 					<div class="form">
 						<div class="row mb-1">
 							<div class="col-6">
-								<input class="form-control" placeholder="Title" name="Title" value="<?= $ticket->GetAttr("Title")?>">
+								<input class="form-control" placeholder="Title" name="Title" value="<?= $ticket->GetAttr("Title")?>" <?= ($me->CheckPermission("ticket", "change_ticket_title")) == true ? "" : "disabled" ?>>
 							</div>
 							<div class="col-12 mt-2">
 								<textarea class="form-control" rows="12" readonly placeholder="Explain in as much detail as possible the reason for the ticket"><?= $ticket->GetAttr("Description")?></textarea>
@@ -171,6 +176,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 			  </div>
 			</div>
 			</form>
+		<?php if($me->CheckPermission("ticket", "view_ticket_comments")){ ?>
 			<div class="card">
 			  <div class="card-header">
 				Comments
@@ -191,6 +197,7 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							<hr>
 							<?php } ?>
 							<?php } ?>
+							<?php if($me->CheckPermission("ticket", "create_ticket_comment")){ ?>
 							<form name="ins_comment" method="post" action="">
 							<div class="col-12 mt-2">
 								<textarea class="form-control" rows="2" name="new_comment"  placeholder="Comment"></textarea>
@@ -199,10 +206,12 @@ if(!empty($_POST) && isset($_GET['TID'])){
 								<input type="submit" class="btn btn-outline-primary float-end" value="Create Comment">
 							</div>
 							</form>
+							<?php } ?>
 						</div>
 					</div>  
 			  </div>
 			</div>
+		<?php } ?>
 		</div>
 	</div>
 
@@ -214,4 +223,3 @@ if(!empty($_POST) && isset($_GET['TID'])){
 <script>
 $('.bs_selpick').selectpicker();
 </script>
-

@@ -10,11 +10,13 @@ $groups = $group->GetAllGroups();
 	<div class="col-12">
 		<div class="card">
 		  <div class="card-body">
-			  <div class="row mb-2">
-			  	<div class="col-6">
-					<a href="create.php" class="btn btn-outline-primary">Create New Group</a>
+			  <?php if($me->CheckPermission("admin", "create_new_group")){ ?>
+				  <div class="row mb-2">
+					<div class="col-6">
+						<a href="create.php" class="btn btn-outline-primary">Create New Group</a>
+					  </div>
 				  </div>
-			  </div>
+			  <?php } ?>
 			<table id="group_table" class="table table-striped">
 				<thead>
 					<tr>

@@ -2,6 +2,9 @@
 require("../../masterutil.php");
 $pagename = "User Management";
 
+if(!$me->CheckPermission("admin", "view_user_management")){
+	header("Location: /dashboard.php");
+}
 $user = new internal_user($database);
 $all_users_low_info = $user->GetAllUsers_Minimal();
 ?>

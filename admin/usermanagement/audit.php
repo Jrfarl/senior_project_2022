@@ -2,6 +2,10 @@
 require("../../masterutil.php");
 $pagename = "User Management";
 
+if(!$me->CheckPermission("admin", "view_user_management")){
+	header("Location: /dashboard.php");
+}
+
 $user = new internal_user($database);
 $user->GetUserFromID($_GET['user']);
 $group_controller = new user_group($database, $user);
@@ -21,18 +25,20 @@ if(!empty($_POST)){
 			}
 		}
 	}
-	foreach($all_groups as $ag){
-		if(isset($_POST['group_'.$ag['Group_ID']])){
-			// User should be in group
-			if(!isset($my_groups_internal[$ag['Group_ID']])){
-				$group_controller->AddUserToGroup($_GET['user'],$ag['Group_ID']);
-				$group_change = true;
-			}
-		}else{
-			// User should not be in group
-			if(isset($my_groups_internal[$ag['Group_ID']])){
-				$group_controller->RemoveUserFromGroup($_GET['user'],$ag['Group_ID']);
-				$group_change = true;
+	if($me->CheckPermission("admin", "edit_user_groups")){
+		foreach($all_groups as $ag){
+			if(isset($_POST['group_'.$ag['Group_ID']])){
+				// User should be in group
+				if(!isset($my_groups_internal[$ag['Group_ID']])){
+					$group_controller->AddUserToGroup($_GET['user'],$ag['Group_ID']);
+					$group_change = true;
+				}
+			}else{
+				// User should not be in group
+				if(isset($my_groups_internal[$ag['Group_ID']])){
+					$group_controller->RemoveUserFromGroup($_GET['user'],$ag['Group_ID']);
+					$group_change = true;
+				}
 			}
 		}
 	}
@@ -58,28 +64,28 @@ if(!empty($_POST)){
 				<div class="row">
 					<div class="col-6 mb-2">
 						Username
-						<input type="text" name="Username" class="form-control" value="<?= $user->GetAttr("Username") ?>">
+						<input type="text" name="Username" class="form-control"  <?= ($me->CheckPermission("admin", "edit_user_username")) == true ? "" : "disabled" ?> value="<?= $user->GetAttr("Username") ?>">
 					</div>
 					<div class="col-6 mb-2">
 						Status
-						<select class="form-control" name="User_Status">
+						<select class="form-control" name="User_Status" <?= ($me->CheckPermission("admin", "edit_user_status")) == true ? "" : "disabled" ?>>
 							<option value=1 <?= $user->GetAttr("User_Status") == 1 ? "selected" : "" ?>>Active</option>
 							<option value=0 <?= $user->GetAttr("User_Status") == 0 ? "selected" : "" ?>>Inctive</option>
 						</select>
 					</div>
 					<div class="col-6 mb-2">
 						Email
-						<input type="text" name="Email" class="form-control" value="<?= $user->GetAttr("Email") ?>">
+						<input type="text" name="Email" class="form-control" value="<?= $user->GetAttr("Email") ?>" >
 					</div>
 					<div class="col-6 mb-2">
 					</div>
 					<div class="col-6 mb-2">
 						First Name
-						<input type="text" name="First_Name" class="form-control" value="<?= $user->GetAttr("First_Name") ?>">
+						<input type="text" name="First_Name" class="form-control" value="<?= $user->GetAttr("First_Name") ?>" <?= ($me->CheckPermission("admin", "edit_user_name")) == true ? "" : "disabled" ?>>
 					</div>
 					<div class="col-6 mb-2">
 						Last Name
-						<input type="text" name="Last_Name" class="form-control" value="<?= $user->GetAttr("Last_Name") ?>">
+						<input type="text" name="Last_Name" class="form-control" value="<?= $user->GetAttr("Last_Name") ?>" <?= ($me->CheckPermission("admin", "edit_user_name")) == true ? "" : "disabled" ?>>
 					</div>
 					<hr>
 					<div class="col-6 mb-2 text-center">
@@ -97,7 +103,7 @@ if(!empty($_POST)){
 							?>
 							<tr>
 								<td><?= $ag['Group_Name'] ?></td>
-								<td><input type="checkbox" name="group_<?= $ag['Group_ID'] ?>" <?= isset($my_groups_internal[$ag['Group_ID']]) && $my_groups_internal[$ag['Group_ID']] == true ? "Checked" : ""?>></td>
+								<td><input type="checkbox" name="group_<?= $ag['Group_ID'] ?>" <?= isset($my_groups_internal[$ag['Group_ID']]) && $my_groups_internal[$ag['Group_ID']] == true ? "Checked" : ""?> <?= ($me->CheckPermission("admin", "edit_user_groups")) == true ? "" : "disabled" ?>></td>
 
 							</tr>
 							<?php } ?>
