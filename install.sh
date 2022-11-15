@@ -8,7 +8,7 @@ sudo apt update && apt upgrade -y
 
 sudo apt install php8.0 php8.0-common libapache2-mod-php8.0 php8.0-cli php8.0-mysql -y
 
-mv senior_project_2022/* /var/www/html/
+mv * /var/www/html/
 
 cd /var/www/html 
 
