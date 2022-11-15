@@ -20,7 +20,8 @@ INSERT INTO Group_Permissions
 (Group_ID, Permission)
 values
 (0, "ADMIN_BYPASS"),
-(1, "CREATE_TICKET");
+(1, "CREATE_TICKET"),
+(1, "VIEW_TICKET_COMMENTS");
 
 INSERT INTO Status
 (Status_Code, Status_Name)
