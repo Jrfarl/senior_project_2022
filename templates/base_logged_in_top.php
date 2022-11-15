@@ -32,12 +32,11 @@
           <a class="nav-link" href="/admin/index.php">Administrator</a>
         </li>
 		  <?php } ?>
-<!--
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
--->
+		  
+		  
+
       </ul>
+	<a class="btn btn-outline-danger" href="/logout.php">Log Out</a>
     </div>
   </div>
 </nav>
