@@ -190,8 +190,11 @@ if(!empty($_POST) && isset($_GET['TID'])){
 							</div>
 							<hr>
 							<?php }else{ ?>
-							<?php foreach($comments as $c){ ?>
+							<?php foreach($comments as $c){ 
+										$user = $me->ResolveToUsername($c['Created_By_ID'])[0];
+								?>
 							<div class="row mb-2">
+								<div class="col-12"><small class="text-muted"> <?=$user['Last_Name'].", ".$user['First_Name'] ?></small></div>
 								<div class="col-12"><span><?= $c['Comment_Text'] ?></span></div>
 							</div>
 							<hr>
