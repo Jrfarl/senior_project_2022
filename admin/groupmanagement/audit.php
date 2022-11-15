@@ -52,7 +52,7 @@ if(isset($group_change) && $group_change == true){
 				<div class="row">
 					<div class="col-6 mb-2">
 						Group Name
-						<input type="text" name="Group_Name" class="form-control" value="<?= $group_controller->GetGroupName($_GET['group']) ?>">
+						<input type="text" name="Group_Name" class="form-control" <?= ($me->CheckPermission("admin", "edit_group_name")) == true ? "" : "disabled" ?> value="<?= $group_controller->GetGroupName($_GET['group']) ?>">
 					</div>
 					<div class="col-6 mb-2">
 					</div>
@@ -75,7 +75,7 @@ if(isset($group_change) && $group_change == true){
 									<td><?= $module ?></td>
 									<td><?= key($permission) ?></td>
 									<td><input name="permission_<?= key($permission) ?>" type="checkbox" <?= $me->CheckPermission($module, key($permission)) == true ? "" : "disabled"?>
-											   <?= in_array($permissions[$module][key($permission)], $granted_perms) ? "checked" : ""?> ></td>
+											   <?= in_array($permissions[$module][key($permission)], $granted_perms) ? "checked" : ""?> <?= ($me->CheckPermission("admin", "edit_group_permissions")) == true ? "" : "disabled" ?>></td>
 								</tr>
 								<?php } ?>
 							</tbody>

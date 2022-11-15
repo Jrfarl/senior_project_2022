@@ -32,6 +32,7 @@ if(isset($_GET['success'])){
 		  </div>
 		  <div class="card-body">
 			<p class="card-text">
+				 <?php if($me->CheckPermission("ticket", "create")){ ?>
 				<div class="form">
 					<form action="" method="post">
 			  		<div class="row mb-1">
@@ -47,6 +48,9 @@ if(isset($_GET['success'])){
 					</div>
 					</form>
 			  	</div>  
+			  <?php }else{ ?>
+			  		You are not authorized to create tickets.
+			  <?php } ?>
 			</p>
 		  </div>
 		</div>

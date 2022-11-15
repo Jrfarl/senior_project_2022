@@ -19,9 +19,11 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/dashboard.php">Home</a>
         </li>
+		   <?php if($me->CheckPermission("ticket", "create")){ ?>
         <li class="nav-item">
           <a class="nav-link" href="/ticket/create.php">Create Ticket</a>
         </li>
+		  <?php } ?>
 		<li class="nav-item">
           <a class="nav-link" href="/ticket/list.php">View Tickets</a>
         </li>
