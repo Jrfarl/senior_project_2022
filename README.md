@@ -1,6 +1,20 @@
 # Senior Project 2022
 
+This project is a general-purpose ticketing solution. It can be used both in customer facing or internal scenarios. The project was designed to be simple to use and customize. The web portion of the application is written in PHP and the database uses MySQL. In Order to use the project, follow the install instructions below. It is recommended to change the default Administrator password before use. 
 
+ 
+
+This program was developed and tested on ubuntu 22.04.1. For best results, it is highly recommended that you use the server installation for testing. You can find the ISO image at the link provided below. 
+
+https://ubuntu.com/download/server#architectures 
+
+Note: The application was tested on an ARM processor and was able to successfully run. The application was developed and tested thoroughly on a virtual machine running ProxMox with an AMD Epyc processor. Consumer grade processors should function the same as the server grade Epyc processor. 
+
+ 
+
+User: Administrator 
+
+Password: password 
 
 
 # Building from git
