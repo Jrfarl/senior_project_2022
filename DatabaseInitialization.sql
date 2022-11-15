@@ -2,8 +2,9 @@ Use SeniorProject;
 
 INSERT INTO Group_Reference
 (Group_ID, Group_Name)
-value
-(0, "Administrator");
+values
+(0, "Administrator"),
+(1, "Customers");
 
 INSERT INTO Users
 (User_ID, First_Name, Last_Name, Username, Password)
@@ -17,8 +18,9 @@ value
 
 INSERT INTO Group_Permissions
 (Group_ID, Permission)
-value
-(0, "ADMIN_BYPASS");
+values
+(0, "ADMIN_BYPASS"),
+(1, "CREATE_TICKET");
 
 INSERT INTO Status
 (Status_Code, Status_Name)
