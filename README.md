@@ -12,9 +12,6 @@ Note: The application was tested on an ARM processor and was able to successfull
 
  
 
-User: Administrator 
-
-Password: password 
 
 
 # Building from git
@@ -39,5 +36,9 @@ To install all requirements and configure the application automatically perform 
 
 Thats it! You can now go to the ip address assigned to the machine. Apache will automatically assume that it is broadcasting on all interfaces.
 
+#Default Credentials
 
+User: Administrator 
+
+Password: password 
 
