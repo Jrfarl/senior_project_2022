@@ -5,6 +5,7 @@ require("masterutil.php");
 $pagename="Register";
 
 $newUser = new internal_user($database);
+$group_controller = new user_group($database);
 if(!$newUser->FetchUser()){
 	if(!empty($_POST)){
 		$stop = false;
@@ -17,7 +18,7 @@ if(!$newUser->FetchUser()){
 		if(!isset($_POST['username']) || !isset($_POST['password']) ||
 			 !isset($_POST['fname']) || !isset($_POST['lname']) ||
 			 $_POST['username'] == "" || $_POST['password'] == "" || 
-			 $_POST['fname'] == "" || $_POST['lname'] = ""){
+			 $_POST['fname'] == "" || $_POST['lname'] == ""){
 				$error[] = "Please fill in all fields";
 				$stop = true;
 			 }
@@ -30,6 +31,7 @@ if(!$newUser->FetchUser()){
 		if(!$stop){
 			if($newUser->CreateUser($_POST['username'], $_POST['password'], $_POST['fname'], $_POST['lname'])){
 				// Creation Successful, 
+				$group_controller->AddUserToGroup($newUser->GetUID(), 1);
 				header("Location: dashboard.php");
 			}else{
 				$error[] = "An unknown mysqli error has occured.";
@@ -50,7 +52,6 @@ if(!$newUser->FetchUser()){
 </head>
 
 <body>
-
 	<?php if(!empty($error)){?>
 	<div class="alert alert-danger" role="alert">
 	 <?php foreach($error as $k=>$e){
@@ -88,32 +89,31 @@ if(!$newUser->FetchUser()){
     
     <div class ="col-md-10 mx-auto col-lg-5">
     
-      <form class="p-4 border rounded-3 bg-light" action="" method="post">
+	<form class="p-4 border rounded-3 bg-light" action="" method="post">
       <h3 class="text-center">Register</h3>
       	<div class="form-floating mb-3">
-		<input class="form-control" type="text" name="username" placeholder="Username">
-        <label for="username">Username</label>
+			<input class="form-control" type="text" name="username" placeholder="Username">
+			<label for="username">Username</label>
         </div>
         <div class="form-floating mb-3">
-		<input class="form-control" type="password" name="password" placeholder="Password">
-        <label for="password">Password</label>
+			<input class="form-control" type="password" name="password" placeholder="Password">
+			<label for="password">Password</label>
         </div>
         <div class="form-floating mb-3">
-		<input class="form-control" type="password" name="password_confirm" placeholder="Confirm Password">
-        <label for="password_confirm">Confirm Password</label>
+			<input class="form-control" type="password" name="password_confirm" placeholder="Confirm Password">
+			<label for="password_confirm">Confirm Password</label>
         </div>
         <div class="form-floating mb-3">
-		<input class="form-control" type="text" name="fname" placeholder="First Name">
-        <label for="fname">First Name</label>
+			<input class="form-control" type="text" name="fname" placeholder="First Name">
+			<label for="fname">First Name</label>
         </div>
         <div class="form-floating mb-3">
-		<input class="form-control" type="text" name="lname" placeholder="Last Name">
-        <label for="lname">Last Name</label>
+			<input class="form-control" type="text" name="lname" placeholder="Last Name">
+			<label for="fname">Last Name</label>
         </div>
         <div class="row">
 			<input type="submit" placeholder="Register" class="btn btn-outline-primary ">
         </div>
-
 	</form>
     </div>
     </div>

@@ -13,14 +13,15 @@ $pagename = "Site Settings";
 				<button class="nav-link active"  data-bs-toggle="tab" data-bs-target="#core" type="button" role="tab"  aria-selected="true">Core</button>
 			  </li>
 			  <li class="nav-item" role="presentation">
-				<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-selected="false">Profile</button>
+				<button class="nav-link" data-bs-toggle="tab" data-bs-target="#ticket_status" type="button" role="tab" aria-selected="false">Ticket Statuses</button>
 			  </li>
 			  <li class="nav-item" role="presentation">
-				<button class="nav-link" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-selected="false">Contact</button>
+				<button class="nav-link" data-bs-toggle="tab" data-bs-target="#ticket_priority" type="button" role="tab" aria-selected="false">Ticket Priorities</button>
 			  </li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 			  <div class="tab-pane fade show active" id="core" role="tabpanel">
+				  <form action="" method="post">
 				  <div class="row mt-2">
 				  	<div class="col-6">
 						<div class="row  mb-2">
@@ -42,9 +43,13 @@ $pagename = "Site Settings";
 						</div>
 					</div>
 				  </div>
+				  <div class="row my-2">
+				  	<input type="submit" class="btn btn-outline-primary col-12">
+				  </div>
+				  </form>
 				</div>
-			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+			  <div class="tab-pane fade" id="ticket_status" role="tabpanel" ></div>
+			  <div class="tab-pane fade" id="ticket_priority" role="tabpanel"></div>
 			</div>
 		  </div>
 		</div>

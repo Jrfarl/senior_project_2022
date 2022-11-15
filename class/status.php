@@ -23,7 +23,11 @@ class Status{
 		return $return;
 	}
 	function GetAll(){
+		$status_array = [];
 		$return = $this->db->query("SELECT * FROM Status");
-		return $return;
+		foreach($return as $r){
+			$status_array[$r['Status_Code']] = $r['Status_Name'];
+		}
+		return $status_array;
 	}
 }

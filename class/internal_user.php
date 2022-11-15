@@ -65,7 +65,8 @@ class internal_user{
 		if(!($this->DoesUsernameExist($username))){
 			$returns = $this->db->query('INSERT INTO `Users` (`First_Name`, `Last_Name`,  `Username`, `Password`) VALUES (?,?,?,?)', array($first_name, $last_name, $username, password_hash($password, PASSWORD_DEFAULT)), false);
 			if($returns== 1){
-				$_SESSION['user_uid'] = $this->db->query('SELECT User_ID FROM `Users` WHERE `Username` = ?', array($username), true)[0]['User_ID'];
+				$this->User_ID = $this->db->query('SELECT User_ID FROM `Users` WHERE `Username` = ?', array($username), true)[0]['User_ID'];
+				$_SESSION['user_uid'] = $this->User_ID;
 				return true;
 			}else{
 				return false;
