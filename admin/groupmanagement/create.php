@@ -49,13 +49,16 @@ if(!empty($_POST)){
 							<tbody>
 
 								<?php foreach($permissions as $module=>$permission){ 
+									foreach($permission as $k=>$p){
+//										print_r($p)
 								?>
 								<tr>
 									<td><?= $module ?></td>
-									<td><?= key($permission) ?></td>
-									<td><input name="permission_<?= key($permission) ?>" type="checkbox" <?= $me->CheckPermission($module, key($permission)) == true ? "" : "disabled"?>></td>
+									<td><?= $k ?></td>
+									<td><input name="permission_<?= $k ?>" type="checkbox" <?= $me->CheckPermission($module, $k) == true ? "" : "disabled"?>
+									<?= ($me->CheckPermission("admin", "edit_group_permissions")) == true ? "" : "disabled" ?>></td>
 								</tr>
-								<?php } ?>
+								<?php }}?>
 							</tbody>
 						</table>
 					</div>

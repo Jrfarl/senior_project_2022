@@ -8,27 +8,29 @@ foreach($groupperms as $gp){
 	$granted_perms[] = $gp['Permission'];
 }
 $permissions = Get_Global_Permissions();
-
 if(!empty($_POST)){
 	if(isset($_POST['Group_Name']) && $_POST['Group_Name'] != ""){
 		if($group_controller->GetGroupName($_GET['group']) != $_POST['Group_Name']){
 			$group_controller->UpdateGroupName($_GET['group'], $_POST['Group_Name']);
 		}
 	}
-	foreach($permissions as $k=>$p){
-		if(isset($_POST['permission_'.key($p)])){
-//			// Group Should Have Perm
-			if(!in_array($permissions[$k][key($p)], $granted_perms)){
-				$group_controller->AddGroupPermission($_GET['group'],$permissions[$k][key($p)]);
-				$group_change = true;
-			}
-		}else{
-//			// User should not be in group
-			if(in_array($permissions[$k][key($p)], $granted_perms)){
-				$group_controller->RemoveGroupPermission($_GET['group'],$permissions[$k][key($p)]);
-				$group_change = true;
+	foreach($permissions as $module=>$p){
+		foreach($p as $key=>$perm){
+			if(isset($_POST['permission_'.$key])){
+	//			// Group Should Have Perm
+				if(!in_array($permissions[$module][$key], $granted_perms)){
+					$group_controller->AddGroupPermission($_GET['group'],$permissions[$module][$key]);
+					$group_change = true;
+				}
+			}else{
+	//			// User should not be in group
+				if(in_array($permissions[$module][$key], $granted_perms)){
+					$group_controller->RemoveGroupPermission($_GET['group'],$permissions[$module][$key]);
+					$group_change = true;
+				}
 			}
 		}
+
 	}
 }
 if(isset($group_change) && $group_change == true){
@@ -70,14 +72,15 @@ if(isset($group_change) && $group_change == true){
 							<tbody>
 
 								<?php foreach($permissions as $module=>$permission){ 
+									foreach($permission as $k=>$p){
 								?>
 								<tr>
 									<td><?= $module ?></td>
-									<td><?= key($permission) ?></td>
-									<td><input name="permission_<?= key($permission) ?>" type="checkbox" <?= $me->CheckPermission($module, key($permission)) == true ? "" : "disabled"?>
-											   <?= in_array($permissions[$module][key($permission)], $granted_perms) ? "checked" : ""?> <?= ($me->CheckPermission("admin", "edit_group_permissions")) == true ? "" : "disabled" ?>></td>
+									<td><?= $k ?></td>
+									<td><input name="permission_<?= $k ?>" type="checkbox" <?= $me->CheckPermission($module, $k) == true ? "" : "disabled"?>
+											   <?= in_array($permissions[$module][$k], $granted_perms) ? "checked" : ""?> <?= ($me->CheckPermission("admin", "edit_group_permissions")) == true ? "" : "disabled" ?>></td>
 								</tr>
-								<?php } ?>
+								<?php }}?>
 							</tbody>
 						</table>
 					</div>

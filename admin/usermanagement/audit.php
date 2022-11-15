@@ -123,13 +123,14 @@ if(!empty($_POST)){
 							<tbody>
 
 								<?php foreach(Get_Global_Permissions() as $module=>$permission){ 
+									foreach($permission as $key=>$p){
 								?>
 								<tr>
 									<td><?= $module ?></td>
-									<td><?= key($permission) ?></td>
-									<td><input type="checkbox" disabled <?= $user->CheckPermission($module, key($permission)) == true ? "checked" : ""?> ></td>
+									<td><?= $key ?></td>
+									<td><input type="checkbox" disabled <?= $user->CheckPermission($module, $key) == true ? "checked" : ""?> ></td>
 								</tr>
-								<?php } ?>
+								<?php }} ?>
 							</tbody>
 						</table>
 						<span style="color:red; font-size: 75%">Attention: Permissions can only be inherited at the group level!</span>
