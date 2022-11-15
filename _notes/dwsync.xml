@@ -12,4 +12,5 @@
 <file name="logout.php" server="seniorproj.gabeharman.com//var/www/html/" local="133112609103998453" remote="133112609120000000" Dst="2" />
 <file name="checkfile.php" server="seniorproj.gabeharman.com//var/www/html/" local="133128267705419076" remote="133128267700000000" Dst="1" />
 <file name=".htaccess" server="seniorproj.gabeharman.com//var/www/html/" local="133128346141767109" remote="133128346280000000" Dst="1" />
+<file name="mysql_setup.sql" server="seniorproj.gabeharman.com//var/www/html/" local="133129566198730650" remote="133129566200000000" Dst="1" />
 </dwsync>
