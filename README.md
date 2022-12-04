@@ -42,3 +42,11 @@ User: Administrator
 
 Password: password 
 
+# Security Considerations
+The install instructions above are designed to give a user a quickly obtainable solution that is not production ready. There are a few steps and vulnerabilities that sould be taken care of before placing our application in a production environment.
+
+MySQL root password
+- 	By default the MySQL root password is configured by our scripts to ensure that the database is set up correctly. After running the setup shell script, it is 	     highly encouraged to run the mysql_secure_installation command. Make sure that you update the *masterconfig.php* file with the updated credentials.
+
+Default Credentials
+-	Reset the administrator account's password before placing the system in production. The new password should be complex and hard to guess. The default administrator account has superuser permissions unless a developer alters code listed in the CheckPermission method.
